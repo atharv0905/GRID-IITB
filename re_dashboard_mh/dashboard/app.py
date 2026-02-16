@@ -551,6 +551,7 @@ def dashboard_layout():
                                 options=[{"label": k, "value": k} for k in FORECAST_ORDER],
                                 value="Nowcasting",
                                 clearable=False,
+                                className="Select-control"
                             ),
 
                             html.Br(),
