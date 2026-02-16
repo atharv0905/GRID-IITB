@@ -1,5 +1,6 @@
 # api/main.py
 from __future__ import annotations
+from pydantic import BaseModel
 
 import os
 from typing import Optional, List, Dict, Any
@@ -16,11 +17,44 @@ engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 
 app = FastAPI(title="Forecast API")
 
-
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+    
 @app.get("/health")
 def health():
     return {"ok": True}
 
+def authenticate_user(username: str, password: str) -> bool:
+    try:
+        conn = psycopg2.connect(DATABASE_URL)
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        query = """
+            SELECT 1
+            FROM users
+            WHERE uname = %s
+              AND password = crypt(%s, password)
+        """
+        cur.execute(query, (username, password))
+        result = cur.fetchone()
+
+        cur.close()
+        conn.close()
+
+        return result is not None
+
+    except Exception as e:
+        print("Auth DB error:", e)
+        return False
+    
+@app.post("/login")
+def login(request: LoginRequest):
+    print(f"Login attempt: {request.username}")
+    if authenticate_user(request.username, request.password):
+        return {"success": True, "message": "Login successful"}
+    else:
+        return {"success": False, "message": "Invalid credentials"}
 
 @app.get("/regions")
 def regions():

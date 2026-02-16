@@ -38,7 +38,7 @@ except Exception:
 # -----------------------------
 DAYFIRST = os.environ.get("DAYFIRST", "1").strip() not in ("0", "false", "False", "no")
 
-API_BASE = os.environ.get("API_BASE", "http://localhost:8000")
+API_BASE = os.environ.get("API_BASE", "http://10.135.5.11:8000")
 SHAPEFILE_PATH = os.environ.get("SHAPEFILE_PATH", "../data/India_State_Boundary_FIXED_4326.shp")
 
 FORECAST_ORDER = ["Nowcasting", "Intra", "Inter", "Medium"]
@@ -1418,28 +1418,28 @@ def login_layout():
         ],
     )
 
-def authenticate_user(username: str, password: str) -> bool:
-    try:
-        conn = psycopg2.connect(DATABASE_URL)
-        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+# def authenticate_user(username: str, password: str) -> bool:
+#     try:
+#         conn = psycopg2.connect(DATABASE_URL)
+#         cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        query = """
-            SELECT 1
-            FROM users
-            WHERE uname = %s
-              AND password = crypt(%s, password)
-        """
-        cur.execute(query, (username, password))
-        result = cur.fetchone()
+#         query = """
+#             SELECT 1
+#             FROM users
+#             WHERE uname = %s
+#               AND password = crypt(%s, password)
+#         """
+#         cur.execute(query, (username, password))
+#         result = cur.fetchone()
 
-        cur.close()
-        conn.close()
+#         cur.close()
+#         conn.close()
 
-        return result is not None
+#         return result is not None
 
-    except Exception as e:
-        print("Auth DB error:", e)
-        return False
+#     except Exception as e:
+#         print("Auth DB error:", e)
+#         return False
 
 
 @app.callback(
@@ -1451,10 +1451,11 @@ def display_page(pathname):
     if not session.get("logged_in"):
         return login_layout()
 
-    if pathname == "/dashboard":
+    if pathname in ("/", "/dashboard"):
         return dashboard_layout()
 
     return login_layout()
+
 
 @app.callback(
     Output("login_message", "children"),
@@ -1468,13 +1469,27 @@ def login(n_clicks, username, password):
     if not username or not password:
         return "", "/"
 
-    if authenticate_user(username, password):
-        session.permanent = True # Use permanent session to enable timeout
-        session["logged_in"] = True
-        session["username"] = username
-        return "", "/dashboard"
-    else:
-        return "Invalid username or password", "/"
+    try:
+        print("LOGIN CALLBACK TRIGGERED")
+        print("API_BASE:", API_BASE)
+        r = SESSION.post(
+            f"{API_BASE}/login",
+            json={"username": username, "password": password},
+        )
+
+        if r.ok:
+            session.permanent = True
+            session["logged_in"] = True
+            session["username"] = username
+            return "", "/dashboard"
+        else:
+            return "Invalid username or password", "/"
+        print("STATUS CODE:", r.status_code)
+        print("RESPONSE TEXT:", r.text)
+
+    except Exception as e:
+        print("Login API error:", e)
+        return "Authentication service unavailable", "/"
 
 
 @app.callback(
