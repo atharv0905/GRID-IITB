@@ -64,8 +64,10 @@ h2, h5 {
 }
 
 .logout-btn{
+  background-color: rgba(255, 0, 0, 0.5);
   margin-top: 18px;
   white-space: nowrap;
+  color: white;
 }
 
 .panel{
@@ -785,4 +787,14 @@ h2, h5 {
   max-height:520px;
   overflow:auto;
   border-radius:12px;
+}
+
+/* Yash - Dropdown */
+.dropdown {
+  background-color: #0b0f14 !important;
+}
+
+#sl_refresh {
+  background-color: #e9eef6 !important;
+  padding: 10px !important;
 }

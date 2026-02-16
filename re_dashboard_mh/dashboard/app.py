@@ -551,20 +551,20 @@ def dashboard_layout():
                                 options=[{"label": k, "value": k} for k in FORECAST_ORDER],
                                 value="Nowcasting",
                                 clearable=False,
-                                className="Select-control"
+                                className="dropdown"
                             ),
 
                             html.Br(),
                             dbc.Label("Region"),
-                            dcc.Dropdown(id="dd_region", options=[], value=None, clearable=False),
+                            dcc.Dropdown(id="dd_region", options=[], value=None, clearable=False, className="dropdown"),
 
                             html.Br(),
                             dbc.Label("Plant"),
-                            dcc.Dropdown(id="dd_plant", options=[], value=None, clearable=False),
+                            dcc.Dropdown(id="dd_plant", options=[], value=None, clearable=False, className="dropdown"),
 
                             html.Br(),
                             dbc.Label("Revision"),
-                            dcc.Dropdown(id="dd_revision", options=[], value="LATEST", clearable=False),
+                            dcc.Dropdown(id="dd_revision", options=[], value="LATEST", clearable=False, className="dropdown"),
                             html.Br(),
                             dbc.Label("Run date"),
                             dcc.DatePickerSingle(
@@ -572,6 +572,7 @@ def dashboard_layout():
                                 display_format="YYYY-MM-DD",
                                 date=None,
                                 clearable=True,
+                                className="dropdown"
                             ),
                             html.Div(id="run_date_hint", style={"fontSize": "12px", "opacity": 0.75, "marginTop": "4px"}),
 
