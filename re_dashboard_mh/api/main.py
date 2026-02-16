@@ -1,7 +1,7 @@
 # api/main.py
 from __future__ import annotations
 from pydantic import BaseModel
-
+import psycopg2
 import os
 from typing import Optional, List, Dict, Any
 
