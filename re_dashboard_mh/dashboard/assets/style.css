@@ -1,0 +1,788 @@
+:root{
+  --bg0:#0b0f14;
+  --bg1:#0e1116;
+  --card:#121822;
+  --card2:#0f141d;
+  --stroke:rgba(255,255,255,.08);
+  --text:rgba(233,238,246,.95);
+  --muted:rgba(233,238,246,.65);
+  --shadow:0 18px 40px rgba(0,0,0,.40);
+  --r:16px;
+}
+
+body{
+  background: radial-gradient(1100px 700px at 18% 0%, #1b2028 0%, var(--bg1) 55%, var(--bg0) 100%) !important;
+  color: var(--text) !important;
+}
+
+.card {
+  border-radius: 16px !important;
+  border: 1px solid rgba(255,255,255,0.10) !important;
+  background: rgba(18,22,28,0.86) !important;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.22) !important;
+}
+
+h1,h2,h3{ 
+  letter-spacing:.2px; 
+}
+
+h2, h5 { 
+  letter-spacing: 0.3px; 
+}
+/* Scrollable table container */
+.table-scroll{
+  max-height: 420px;      /* adjust if you want taller/shorter */
+  overflow-y: auto;
+  overflow-x: auto;
+  position: relative;     /* helps sticky header work reliably */
+  border-radius: 14px;
+}
+
+.page-title{ 
+  text-align:center; 
+  margin:18px 0 0; 
+  font-weight:800; 
+}
+
+.page-header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+  margin:4px 0 2px;
+}
+
+.page-title-wrap{
+  flex:1 1 auto;
+  min-width:0;
+}
+
+.page-subtitle{ 
+  text-align:center; 
+  color:var(--muted); 
+  margin:6px 0 18px; 
+}
+
+.logout-btn{
+  margin-top: 18px;
+  white-space: nowrap;
+}
+
+.panel{
+  background: linear-gradient(180deg, rgba(18,24,34,.92), rgba(14,18,26,.92));
+  border: 1px solid var(--stroke);
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  padding:16px;
+}
+
+.charts_section_hide{
+  display:none;
+}
+
+.section-title{
+  font-size:16px;
+  font-weight:800;
+  color:rgba(233,238,246,.92);
+  margin:0 0 12px;
+}
+
+.kpi-tile{
+  background: linear-gradient(135deg, rgba(34,46,74,.92), rgba(18,22,28,.92));
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.kpi-value{ 
+  font-size: 22px; 
+  font-weight: 900; 
+  margin:0; 
+}
+
+.kpi-label{ 
+  font-size: 12px; 
+  color: var(--muted); 
+  margin-top:6px; 
+}
+
+.kpi-sub{ 
+  font-size: 12px; 
+  color: rgba(170,210,255,.95); 
+  margin-top:6px; 
+}
+
+.leaflet-container{
+  border-radius: 14px !important;
+}
+
+.js-plotly-plot .plotly{
+  border-radius: 14px;
+}
+
+.table{
+  color: rgba(233,238,246,.92) !important;
+}
+
+.table thead th{
+  position: sticky;
+  top: 0;
+  background: rgba(18,24,34,.98) !important;
+  z-index: 2;
+}
+
+/* Dark dropdown styling */
+.Select-control {
+  background-color: rgba(20,24,31,0.95) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  color: #e9eef6 !important;
+}
+
+.Select-menu-outer {
+  background-color: rgba(20,24,31,0.98) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+}
+
+.Select-option { 
+  color: #e9eef6 !important; 
+}
+
+.Select-option.is-focused { 
+  background: rgba(255,255,255,0.08) !important; 
+}
+
+.Select-value-label { 
+  color: #e9eef6 !important; 
+}
+
+.Select-placeholder { 
+  color: rgba(233,238,246,0.65) !important; 
+}
+
+/* Summary vertical stack */
+.summary-stack{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+/* Make map occupy panel better */
+.map-panel{ padding: 14px; }
+.map-wrap{ margin-top:10px; padding:0; }
+.map-wrap .leaflet-container{
+  border-radius: 14px !important;
+}
+
+/* Slightly tighter column gap */
+.g-3{ --bs-gutter-x: 1rem; --bs-gutter-y: 1rem; }
+
+/* 2x2 grid with spacing */
+.charts-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:16px;
+}
+
+/* Each chart becomes a separate card */
+.chart-card{
+  border:1px solid rgba(255,255,255,0.10);
+  border-radius:16px;
+  background:rgba(10,14,20,0.55);
+  box-shadow:0 10px 28px rgba(0,0,0,0.35);
+  padding:10px 10px 6px 10px;
+}
+
+/* remove inner graph extra padding */
+.chart-card .js-plotly-plot,
+.chart-card .plot-container{
+  border-radius:12px;
+}
+
+/* Optional: tighter title look */
+.chart-card .gtitle{
+  font-weight:700 !important;
+}
+
+/* Center table values and headers */
+.table-centered {
+  text-align: center !important;
+}
+
+.table-centered thead th {
+  text-align: center !important;
+  font-weight: 700 !important;
+  background: rgba(18,24,34,.98) !important;
+  border-bottom: 2px solid rgba(255,255,255,.15) !important;
+  padding: 12px 8px !important;
+}
+
+.table-centered tbody td {
+  text-align: center !important;
+  padding: 10px 8px !important;
+  vertical-align: middle !important;
+}
+
+.table-centered tbody tr:hover {
+  background: rgba(255,255,255,.05) !important;
+}
+
+/* Responsive table */
+.table-centered {
+  font-size: 13px;
+  word-break: break-word;
+}
+
+@media (max-width: 768px) {
+  .table-centered {
+    font-size: 11px;
+  }
+  
+  .table-centered thead th,
+  .table-centered tbody td {
+    padding: 6px 4px !important;
+  }
+}
+
+/* Mobile fallback */
+@media (max-width: 992px){
+  .charts-grid{ grid-template-columns:1fr; }
+}
+
+/* -----------------------------
+   Dark theme for Dash DatePickers (react-dates)
+   ----------------------------- */
+
+/* Make picker inputs full width like dropdowns */
+.SingleDatePicker,
+.DateRangePicker {
+  width: 100% !important;
+}
+
+.SingleDatePickerInput,
+.DateRangePickerInput {
+  width: 100% !important;
+  background: rgba(20,24,31,0.95) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  border-radius: 10px !important;
+}
+
+.SingleDatePickerInput__withBorder,
+.DateRangePickerInput__withBorder {
+  border: 1px solid rgba(255,255,255,0.12) !important;
+}
+
+/* Individual date input boxes */
+.DateInput {
+  width: 100% !important;
+  background: transparent !important;
+}
+
+.DateInput_input {
+  background: transparent !important;
+  color: rgba(233,238,246,.95) !important;
+  border: none !important;
+  font-size: 13px !important;
+  padding: 8px 10px !important;
+}
+
+.DateInput_input__focused {
+  background: rgba(255,255,255,0.06) !important;
+  border: none !important;
+}
+
+/* Placeholder */
+.DateInput_input::placeholder {
+  color: rgba(233,238,246,0.55) !important;
+}
+
+/* Calendar popup */
+.SingleDatePicker_picker,
+.DateRangePicker_picker {
+  background: rgba(18,24,34,.98) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 18px 40px rgba(0,0,0,.40) !important;
+}
+
+/* Month container */
+.DayPicker,
+.DayPicker__withBorder,
+.CalendarMonth,
+.CalendarMonth_table {
+  background: rgba(18,24,34,.98) !important;
+}
+
+/* Month title */
+.CalendarMonth_caption,
+.CalendarMonth_caption strong {
+  color: rgba(233,238,246,.92) !important;
+}
+
+/* Weekday header */
+.DayPicker_weekHeader_ul li {
+  color: rgba(233,238,246,.65) !important;
+}
+
+/* Day cells */
+.CalendarDay__default {
+  background: rgba(18,24,34,.98) !important;
+  color: rgba(233,238,246,.90) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+.CalendarDay__default:hover {
+  background: rgba(255,255,255,0.08) !important;
+}
+
+/* Selected day */
+.CalendarDay__selected,
+.CalendarDay__selected:hover {
+  background: rgba(255,209,102,0.35) !important;  /* matches your SELECTED_RING vibe */
+  color: rgba(233,238,246,.95) !important;
+  border: 1px solid rgba(255,209,102,0.60) !important;
+}
+
+/* Range span days */
+.CalendarDay__hovered_span,
+.CalendarDay__hovered_span:hover,
+.CalendarDay__selected_span,
+.CalendarDay__selected_span:hover {
+  background: rgba(74,144,226,0.18) !important;
+  color: rgba(233,238,246,.95) !important;
+  border: 1px solid rgba(74,144,226,0.25) !important;
+}
+
+/* Disabled/out-of-range */
+.CalendarDay__blocked_out_of_range,
+.CalendarDay__blocked_out_of_range:hover {
+  background: rgba(18,24,34,.98) !important;
+  color: rgba(233,238,246,.30) !important;
+  border: 1px solid rgba(255,255,255,0.05) !important;
+}
+
+/* Nav arrows */
+.DayPickerNavigation_button {
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  background: rgba(255,255,255,0.06) !important;
+}
+
+.DayPickerNavigation_button:hover {
+  background: rgba(255,255,255,0.10) !important;
+}
+
+/* Fix the small triangle/caret on popup */
+.DayPicker__horizontal {
+  border-radius: 14px !important;
+}
+
+/* -----------------------------
+   Optional: better scrollbars for table-scroll
+   ----------------------------- */
+.table-scroll::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.18);
+  border-radius: 10px;
+  border: 2px solid rgba(0,0,0,0);
+  background-clip: padding-box;
+}
+
+.table-scroll::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.06);
+  border-radius: 10px;
+}
+
+/* Keep table tight inside scroll wrapper */
+.table-scroll .table {
+  margin-bottom: 0 !important;
+}
+
+/* ---------- Compact Download bar (Date range + button) ---------- */
+.download-bar{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+/* ---------- FORCE Download DateRangePicker to be single-row ---------- */
+.dl-range-compact,
+.dl-range-compact *{
+  box-sizing: border-box;
+}
+
+.dl-range-compact .DateRangePicker,
+.dl-range-compact.DateRangePicker{
+  width: auto !important;
+}
+
+.dl-range-compact .DateRangePickerInput,
+.dl-range-compact .DateRangePickerInput__withBorder{
+  width: auto !important;
+  display: inline-flex !important;     /* KEY: keep From + To in one row */
+  flex-direction: row !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+  gap: 0 !important;
+}
+
+/* Override your global DateInput width:100% ONLY here */
+.dl-range-compact .DateInput{
+  width: 120px !important;
+  display: inline-block !important;
+  background: transparent !important;
+}
+
+.dl-range-compact .DateInput_input{
+  width: 120px !important;
+  display: inline-block !important;
+  padding: 6px 8px !important;
+  font-size: 12px !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+.dl-range-compact .DateRangePickerInput_arrow{
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 0 6px !important;
+}
+
+/* Make it look compact + professional */
+.dl-range-compact .DateRangePickerInput{
+  background: rgba(20,24,31,0.95) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  border-radius: 10px !important;
+  padding: 2px 4px !important;
+}
+/* ============================
+   DATA HEADER: single-row layout
+   ============================ */
+.data-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  flex-wrap:nowrap;
+}
+
+.data-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  flex-wrap:nowrap;
+  min-width: 280px;
+}
+
+.data-hint-inline{
+  font-size: 12px;
+  opacity: 0.70;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* Right side (date range + button) */
+.download-bar{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:10px;
+  flex-wrap:nowrap;
+  white-space: nowrap;
+}
+
+/* ============================
+   COMPACT DateRangePicker (ONLY in download bar)
+   Force From/To on SAME ROW + prevent wrapping
+   ============================ */
+.dl-range-compact,
+.dl-range-compact *{
+  box-sizing:border-box;
+}
+
+/* Override your global width:100% only here */
+.dl-range-compact.DateRangePicker,
+.dl-range-compact .DateRangePicker{
+  width:auto !important;
+}
+
+.dl-range-compact .DateRangePickerInput,
+.dl-range-compact .DateRangePickerInput__withBorder{
+  width:auto !important;
+  display:inline-flex !important;     /* keeps From + To in one row */
+  flex-direction:row !important;
+  align-items:center !important;
+  white-space:nowrap !important;
+  padding: 2px 4px !important;
+  border-radius: 10px !important;
+}
+
+/* Critical: your global .DateInput { width:100% } breaks inline layout */
+.dl-range-compact .DateInput{
+  width: 120px !important;
+  display:inline-block !important;
+}
+
+.dl-range-compact .DateInput_input{
+  width: 120px !important;
+  display:inline-block !important;
+  padding: 6px 8px !important;
+  font-size: 12px !important;
+}
+
+/* Keep arrow compact */
+.dl-range-compact .DateRangePickerInput_arrow{
+  display:inline-flex !important;
+  align-items:center !important;
+  padding: 0 6px !important;
+}
+
+/* ============================
+   FIX OVERLAP: open calendar UPWARD (so it doesn't cover table)
+   ============================ */
+.dl-range-compact .DateRangePicker_picker{
+  z-index: 5000 !important;
+  top: auto !important;
+  bottom: 44px !important;   /* opens above the inputs */
+  left: auto !important;
+  right: 0 !important;
+}
+
+/* Button height match */
+.dl-btn{
+  height: 34px;
+}
+/* ============================
+   Compact Plant Meta (left panel bottom)
+   ============================ */
+.compact-meta{
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(10,14,20,0.40);
+  line-height: 1.25;
+}
+
+/* Make each line tighter */
+.compact-meta > div{
+  margin: 0 0 6px 0 !important;
+}
+
+/* First line (Plant | State) more prominent but not huge */
+.compact-meta > div:first-child{
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px !important;
+}
+
+/* Other lines smaller + muted */
+.compact-meta > div:not(:first-child){
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+/* Reduce extra spacing inside panel around meta */
+.panel .compact-meta{
+  margin-top: 10px;
+}
+
+/* On small screens, even tighter */
+@media (max-width: 992px){
+  .compact-meta{
+    padding: 8px 10px;
+  }
+  .compact-meta > div{
+    margin-bottom: 5px !important;
+  }
+}
+/* ===== Map header: title left, meta right (2 lines, clean) ===== */
+.map-header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  padding:8px 12px 10px;
+  margin:0 0 10px;
+  border-radius:14px;
+  background:rgba(0,0,0,0.18);
+}
+/* Right meta */
+.plant-meta-inline{
+  flex:1 1 auto;
+  min-width:0;                 /* critical for wrapping inside flex */
+  text-align:right;
+  font-size:12px;
+  line-height:1.2;
+  opacity:.88;
+}
+
+
+/* Force true 2-line display (no ellipsis cutting) */
+.plant-meta-inline .meta-line1,
+.plant-meta-inline .meta-line2{
+  display:block;
+  white-space:normal;          /* allow wrap */
+  overflow:visible;
+  text-overflow:clip;
+}
+.plant-meta-inline .meta-line1{
+  font-weight:700;
+}
+
+.plant-meta-inline .meta-line2{
+  margin-top:2px;
+  font-size:11.5px;
+  opacity:.78;
+}
+
+/* On narrow screens, stack for readability */
+@media (max-width: 1200px){
+  .map-header{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .plant-meta-inline{
+    text-align:left;
+    width:100%;
+  }
+}
+/* KEY FIX:
+   - remove max-width cap
+   - allow flex to allocate remaining space
+   - min-width:0 is critical so ellipsis works correctly inside flex layouts */
+
+/* Make map panel spacing tighter so it looks aligned */
+.map-panel{ padding: 12px; }
+.map-wrap .leaflet-container{
+  height: 630px !important;   /* bump as needed */
+}
+/* ---------------------------
+   Geospatial header cleanup
+---------------------------- */
+.geo-head{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  padding:8px 12px 10px;
+  margin:0 0 10px;
+  border-radius:14px;
+  background:rgba(0,0,0,0.18);
+}
+
+/* Left title */
+.geo-title{
+  font-size:14px;
+  font-weight:800;
+  line-height:1.1;
+  margin:0;
+  opacity:.95;
+  white-space:nowrap;
+}
+
+.geo-meta{
+  font-size:12px;
+  line-height:1.15;
+  opacity:.85;
+  min-width:0;
+}
+
+.geo-meta .geo-line1,
+.geo-meta .geo-line2{
+  display:block;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* ---------------------------
+   Data header row alignment
+---------------------------- */
+.data-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:nowrap;
+}
+
+.data-left{
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  min-width:0;
+}
+
+.data-hint-inline{
+  font-size:12px;
+  opacity:.7;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:420px;
+}
+
+.download-bar{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:nowrap;
+}
+
+.dl-btn{
+  white-space:nowrap;
+}
+
+/* ---------------------------
+   Date range compact + FIX: popup not fullscreen
+---------------------------- */
+.panel{ overflow:visible; }  /* allow the calendar to float above panels */
+
+.dl-range-compact{
+  z-index:10;
+}
+
+.dl-range-compact .DateRangePickerInput{
+  display:flex;
+  align-items:center;
+  border-radius:10px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+}
+
+.dl-range-compact .DateInput{
+  width:110px;
+}
+
+.dl-range-compact input{
+  width:100%;
+  padding:6px 8px;
+  background:transparent;
+  border:0;
+  color:rgba(233,238,246,.92);
+  font-size:12px;
+}
+
+.dl-range-compact .DateRangePickerInput_arrow{
+  padding:0 6px;
+  opacity:.7;
+}
+
+.DateRangePicker_picker,
+.SingleDatePicker_picker{
+  z-index:20000 !important; /* ensure calendar appears above table/graphs */
+  box-shadow:0 14px 40px rgba(0,0,0,0.55);
+}
+
+/* ---------------------------
+   Optional: table scroll container (if you use it)
+---------------------------- */
+.table-scroll{
+  max-height:520px;
+  overflow:auto;
+  border-radius:12px;
+}
