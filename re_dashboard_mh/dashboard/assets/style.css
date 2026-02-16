@@ -786,3 +786,222 @@ h2, h5 {
   overflow:auto;
   border-radius:12px;
 }
+
+/* ============================
+   FIX: Dropdown dark background
+   ============================ */
+
+/* Main dropdown container */
+.Select-control,
+.VirtualizedSelectFocusedOption {
+  background-color: rgba(20,24,31,0.95) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  color: #e9eef6 !important;
+}
+
+/* Dropdown when focused/open */
+.Select.is-focused > .Select-control,
+.Select.is-open > .Select-control {
+  background-color: rgba(20,24,31,0.98) !important;
+  border-color: rgba(255,255,255,0.18) !important;
+}
+
+/* Dropdown menu (the list that appears) */
+.Select-menu-outer,
+.VirtualizedSelectMenu {
+  background-color: rgba(18,24,34,0.98) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.45) !important;
+}
+
+.Select-menu {
+  background-color: rgba(18,24,34,0.98) !important;
+}
+
+/* Individual dropdown options */
+.Select-option,
+.VirtualizedSelectOption {
+  background-color: rgba(18,24,34,0.98) !important;
+  color: #e9eef6 !important;
+}
+
+/* Hovered/focused option */
+.Select-option.is-focused,
+.Select-option:hover,
+.VirtualizedSelectOption:hover {
+  background-color: rgba(74,144,226,0.20) !important;
+  color: #fff !important;
+}
+
+/* Selected option in dropdown */
+.Select-option.is-selected {
+  background-color: rgba(244,163,64,0.25) !important;
+  color: #fff !important;
+}
+
+/* Selected value display */
+.Select-value,
+.Select-value-label {
+  color: #e9eef6 !important;
+  background-color: transparent !important;
+}
+
+/* Placeholder text */
+.Select-placeholder,
+.Select--single > .Select-control .Select-value {
+  color: rgba(233,238,246,0.65) !important;
+}
+
+/* Input field inside dropdown */
+.Select-input > input {
+  color: #e9eef6 !important;
+}
+
+/* Dropdown arrow */
+.Select-arrow-zone,
+.Select-arrow {
+  opacity: 0.70;
+}
+
+/* Clear button (X) */
+.Select-clear-zone {
+  opacity: 0.65;
+}
+
+.Select-clear-zone:hover {
+  opacity: 0.90;
+}
+
+/* Multi-select values (if you use multi dropdowns) */
+.Select-value {
+  background-color: rgba(74,144,226,0.25) !important;
+  border: 1px solid rgba(74,144,226,0.35) !important;
+  color: #e9eef6 !important;
+}
+
+/* Disabled dropdown */
+.Select.is-disabled > .Select-control {
+  background-color: rgba(20,24,31,0.50) !important;
+  opacity: 0.55;
+}
+
+/* ============================
+   DASH DROPDOWN FIX (Modern Dash 2.0+)
+   Target the actual class names Dash uses
+   ============================ */
+
+/* Main dropdown wrapper */
+.dash-dropdown,
+.Select,
+div[class*="dropdown"] {
+  background: transparent !important;
+}
+
+/* The input/control area (where selected value shows) */
+.Select-control,
+div[class*="control"] {
+  background-color: rgba(20,24,31,0.95) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  color: #e9eef6 !important;
+  min-height: 38px !important;
+}
+
+/* When dropdown is focused */
+.Select.is-focused > .Select-control,
+.Select.is-open > .Select-control {
+  background-color: rgba(20,24,31,0.98) !important;
+  border-color: rgba(255,255,255,0.22) !important;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.15) !important;
+}
+
+/* The dropdown menu container */
+.Select-menu-outer,
+div[class*="menu"] {
+  background-color: rgba(18,24,34,0.98) !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.50) !important;
+  border-radius: 10px !important;
+}
+
+.Select-menu {
+  background-color: transparent !important;
+}
+
+/* Individual menu options */
+.Select-option,
+div[class*="option"] {
+  background-color: transparent !important;
+  color: rgba(233,238,246,0.92) !important;
+  padding: 8px 12px !important;
+}
+
+/* Hovered option */
+.Select-option:hover,
+.Select-option.is-focused,
+div[class*="option"]:hover {
+  background-color: rgba(74,144,226,0.25) !important;
+  color: #fff !important;
+}
+
+/* Selected option */
+.Select-option.is-selected {
+  background-color: rgba(244,163,64,0.30) !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+}
+
+/* The displayed value */
+.Select-value,
+.Select-value-label,
+div[class*="singleValue"],
+div[class*="placeholder"] {
+  color: rgba(233,238,246,0.92) !important;
+  background: transparent !important;
+}
+
+/* Placeholder text */
+.Select-placeholder {
+  color: rgba(233,238,246,0.55) !important;
+}
+
+/* Input field (when typing to search) */
+.Select-input,
+.Select-input > input,
+div[class*="Input"] input {
+  color: rgba(233,238,246,0.92) !important;
+  background: transparent !important;
+}
+
+/* Dropdown arrow indicator */
+.Select-arrow-zone,
+.Select-arrow,
+div[class*="indicatorContainer"] {
+  color: rgba(233,238,246,0.65) !important;
+  opacity: 0.75;
+}
+
+.Select-arrow-zone:hover {
+  opacity: 1;
+}
+
+/* Clear button (X) */
+.Select-clear-zone {
+  opacity: 0.65;
+}
+
+.Select-clear-zone:hover {
+  opacity: 0.90;
+}
+
+/* Multi-select values (if you use multi dropdowns) */
+.Select-value {
+  background-color: rgba(74,144,226,0.25) !important;
+  border: 1px solid rgba(74,144,226,0.35) !important;
+  color: #e9eef6 !important;
+}
+
+/* Disabled dropdown */
+.Select.is-disabled > .Select-control {
+  background-color: rgba(20,24,31,0.50) !important;
+  opacity: 0.55;
+}

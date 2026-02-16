@@ -1,0 +1,279 @@
+{
+    "regions": [
+        {
+            "region_id": "4e9c0ca2-b9bd-4ba6-adfe-4b0b7a1ca7e3",
+            "region_code": "NRLDC",
+            "region_name": "NRLDC",
+            "created_at": "2026-02-09 13:51:33.439704+00:00"
+        },
+        {
+            "region_id": "cadaa1dd-9fae-4cb6-95cf-9a9cc93255b8",
+            "region_code": "MP",
+            "region_name": "MP",
+            "created_at": "2026-02-09 13:51:33.141352+00:00"
+        },
+        {
+            "region_id": "11c3e7eb-f824-481f-a455-e9705ef0a022",
+            "region_code": "MH",
+            "region_name": "MH",
+            "created_at": "2026-02-09 13:51:02.032028+00:00"
+        },
+        {
+            "region_id": "3d4c5d65-03c6-48b5-b639-46a08ec04799",
+            "region_code": "Gujarat",
+            "region_name": "Gujarat",
+            "created_at": "2026-02-09 13:48:47.315770+00:00"
+        },
+        {
+            "region_id": "b43255de-2bf0-4b44-8c7d-a7f08eba00de",
+            "region_code": "WRLDC",
+            "region_name": "WRLDC",
+            "created_at": "2026-02-09 13:48:46.372261+00:00"
+        }
+    ],
+    "users": [
+        {
+            "user_id": "c380e8e0-212b-4a8c-9929-9fcacc247f51",
+            "uname": "yash",
+            "password": "$2a$06$VfONTNQj61aZ2t6etkyuzudieMt30a4J.qBu6LCPiAxnwYcnLzkF."
+        },
+        {
+            "user_id": "ab4beb02-56fa-4d42-9ca7-83e1ded7ec7c",
+            "uname": "atharv",
+            "password": "$2a$06$kXbUDgN4ek6v6.aFKwGImOydHmxTGRE/pO8avZDLRc8s5dPfJXUN2"
+        },
+        {
+            "user_id": "955d06f8-7fb1-4568-96dc-6a80b754b1e0",
+            "uname": "grid",
+            "password": "$2a$06$YVogaGLfhGxBJKA1g358Ju.1b98gFykbf6RqaUJO6c3jX7KbrRicy"
+        },
+        {
+            "user_id": "1b8f6c2e-922f-4f68-bf25-46b76174eaad",
+            "uname": "ganesh",
+            "password": "$2a$06$cGmJGa3hT/POzC9wUJ7B5eKkcY5G7W0B4i4KNQr/1TDL7GZG4kvK6"
+        }
+    ],
+    "plants": [
+        {
+            "plant_id": "70a83c3a-3c10-4bf5-bd10-6d5160b7cc21",
+            "plant_name": "WELSPUN_RATANGARH_-105",
+            "region_id": "cadaa1dd-9fae-4cb6-95cf-9a9cc93255b8",
+            "plant_type": "SOLAR",
+            "lat": 24.682795,
+            "lon": 75.141399,
+            "created_at": "2026-02-09 13:51:33.566941+00:00"
+        },
+        {
+            "plant_id": "efd8671e-a7c6-4b5b-ab8c-aba6ca206592",
+            "plant_name": "WELSPUN_RATANGARH-25",
+            "region_id": "cadaa1dd-9fae-4cb6-95cf-9a9cc93255b8",
+            "plant_type": "SOLAR",
+            "lat": 24.782281,
+            "lon": 75.087186,
+            "created_at": "2026-02-09 13:51:33.559951+00:00"
+        },
+        {
+            "plant_id": "8bd3a274-c8bd-4092-87fa-5c3d28c5d063",
+            "plant_name": "WAANEEP_SOLAR_PVT_LTD",
+            "region_id": "cadaa1dd-9fae-4cb6-95cf-9a9cc93255b8",
+            "plant_type": "SOLAR",
+            "lat": 23.03694,
+            "lon": 76.93667,
+            "created_at": "2026-02-09 13:51:33.552975+00:00"
+        },
+        {
+            "plant_id": "3a9bb3f6-f45f-4054-a7ed-32fd1066ff4a",
+            "plant_name": "VIVAAN_SOLAR_FEEDER_-_I",
+            "region_id": "cadaa1dd-9fae-4cb6-95cf-9a9cc93255b8",
+            "plant_type": "SOLAR",
+            "lat": 23.02474,
+            "lon": 76.0075,
+            "created_at": "2026-02-09 13:51:33.546093+00:00"
+        },
+        {
+            "plant_id": "3180e2a8-5049-4b57-8e8f-f82777c9bf54",
+            "plant_name": "UJAAS_-_1_BAROD",
+            "region_id": "cadaa1dd-9fae-4cb6-95cf-9a9cc93255b8",
+            "plant_type": "SOLAR",
+            "lat": 23.825669,
+            "lon": 75.900133,
+            "created_at": "2026-02-09 13:51:33.539552+00:00"
+        }
+    ],
+    "forecast_runs": [
+        {
+            "run_id": "48ea3126-45cf-44ec-b20b-85b4f5e4354d",
+            "model_name": "NOWCAST",
+            "region_id": "3d4c5d65-03c6-48b5-b639-46a08ec04799",
+            "revision": "R13",
+            "run_t0_utc": "2026-02-14 05:15:00+00:00",
+            "run_t0_ist": "2026-02-14 05:15:00+00:00",
+            "run_t0_raw": "2026-02-14 10:45:00",
+            "created_at": "2026-02-14 05:42:02.525681+00:00"
+        },
+        {
+            "run_id": "8a56aca7-ef68-4b77-9065-38df0d13b3b4",
+            "model_name": "NOWCAST",
+            "region_id": "4e9c0ca2-b9bd-4ba6-adfe-4b0b7a1ca7e3",
+            "revision": "R13",
+            "run_t0_utc": "2026-02-14 05:15:00+00:00",
+            "run_t0_ist": "2026-02-14 05:15:00+00:00",
+            "run_t0_raw": "2026-02-14 10:45:00",
+            "created_at": "2026-02-14 05:37:52.126762+00:00"
+        },
+        {
+            "run_id": "911eda3a-9b9e-4470-83b6-aa6d5a2c2cd8",
+            "model_name": "NOWCAST",
+            "region_id": "cadaa1dd-9fae-4cb6-95cf-9a9cc93255b8",
+            "revision": "R13",
+            "run_t0_utc": "2026-02-14 05:15:00+00:00",
+            "run_t0_ist": "2026-02-14 05:15:00+00:00",
+            "run_t0_raw": "2026-02-14 10:45:00",
+            "created_at": "2026-02-14 05:37:50.568285+00:00"
+        },
+        {
+            "run_id": "659ef431-c653-44f1-940e-c14f61a285f5",
+            "model_name": "NOWCAST",
+            "region_id": "b43255de-2bf0-4b44-8c7d-a7f08eba00de",
+            "revision": "R13",
+            "run_t0_utc": "2026-02-14 05:15:00+00:00",
+            "run_t0_ist": "2026-02-14 05:15:00+00:00",
+            "run_t0_raw": "2026-02-14 10:45:00",
+            "created_at": "2026-02-14 05:36:20.182911+00:00"
+        },
+        {
+            "run_id": "dda88de2-bc56-4760-8765-b3633e7d8365",
+            "model_name": "NOWCAST",
+            "region_id": "11c3e7eb-f824-481f-a455-e9705ef0a022",
+            "revision": "R13",
+            "run_t0_utc": "2026-02-14 05:15:00+00:00",
+            "run_t0_ist": "2026-02-14 05:15:00+00:00",
+            "run_t0_raw": "2026-02-14 10:45:00",
+            "created_at": "2026-02-14 05:36:19.577640+00:00"
+        }
+    ],
+    "mi_predictions": [
+        {
+            "id": 1336485996,
+            "run_id": "f54c9c06-7c69-48be-bd12-eacaa15f1dc3",
+            "plant_id": "d00180e3-cad4-44ee-b52e-8b3bbbf5a956",
+            "valid_time_utc": "2026-01-20 03:00:00+00:00",
+            "valid_time_ist": "2026-01-20 03:00:00+00:00",
+            "valid_time_raw": "2026-01-20 08:30:00",
+            "ghi_pred_wm2": 0.0,
+            "ghi_actual_wm2": null,
+            "power_pred_mw": 0.5840956687749149,
+            "power_actual_mw": null,
+            "solar_power_pred_mw": 0.5840956687749149,
+            "solar_power_actual_mw": null,
+            "wind_power_pred_mw": null,
+            "wind_power_actual_mw": null
+        },
+        {
+            "id": 1336485995,
+            "run_id": "f54c9c06-7c69-48be-bd12-eacaa15f1dc3",
+            "plant_id": "d00180e3-cad4-44ee-b52e-8b3bbbf5a956",
+            "valid_time_utc": "2026-01-20 02:45:00+00:00",
+            "valid_time_ist": "2026-01-20 02:45:00+00:00",
+            "valid_time_raw": "2026-01-20 08:15:00",
+            "ghi_pred_wm2": 0.0,
+            "ghi_actual_wm2": null,
+            "power_pred_mw": 0.5788658751533063,
+            "power_actual_mw": null,
+            "solar_power_pred_mw": 0.5788658751533063,
+            "solar_power_actual_mw": null,
+            "wind_power_pred_mw": null,
+            "wind_power_actual_mw": null
+        },
+        {
+            "id": 1336485994,
+            "run_id": "f54c9c06-7c69-48be-bd12-eacaa15f1dc3",
+            "plant_id": "d00180e3-cad4-44ee-b52e-8b3bbbf5a956",
+            "valid_time_utc": "2026-01-20 02:30:00+00:00",
+            "valid_time_ist": "2026-01-20 02:30:00+00:00",
+            "valid_time_raw": "2026-01-20 08:00:00",
+            "ghi_pred_wm2": 0.0,
+            "ghi_actual_wm2": null,
+            "power_pred_mw": 0.5268107292236416,
+            "power_actual_mw": null,
+            "solar_power_pred_mw": 0.5268107292236416,
+            "solar_power_actual_mw": null,
+            "wind_power_pred_mw": null,
+            "wind_power_actual_mw": null
+        },
+        {
+            "id": 1336485993,
+            "run_id": "f54c9c06-7c69-48be-bd12-eacaa15f1dc3",
+            "plant_id": "d00180e3-cad4-44ee-b52e-8b3bbbf5a956",
+            "valid_time_utc": "2026-01-20 02:15:00+00:00",
+            "valid_time_ist": "2026-01-20 02:15:00+00:00",
+            "valid_time_raw": "2026-01-20 07:45:00",
+            "ghi_pred_wm2": 0.0,
+            "ghi_actual_wm2": null,
+            "power_pred_mw": 0.33965540060688,
+            "power_actual_mw": null,
+            "solar_power_pred_mw": 0.33965540060688,
+            "solar_power_actual_mw": null,
+            "wind_power_pred_mw": null,
+            "wind_power_actual_mw": null
+        },
+        {
+            "id": 1336485992,
+            "run_id": "f54c9c06-7c69-48be-bd12-eacaa15f1dc3",
+            "plant_id": "d00180e3-cad4-44ee-b52e-8b3bbbf5a956",
+            "valid_time_utc": "2026-01-20 02:00:00+00:00",
+            "valid_time_ist": "2026-01-20 02:00:00+00:00",
+            "valid_time_raw": "2026-01-20 07:30:00",
+            "ghi_pred_wm2": 0.0,
+            "ghi_actual_wm2": null,
+            "power_pred_mw": 0.2236941096191551,
+            "power_actual_mw": null,
+            "solar_power_pred_mw": 0.2236941096191551,
+            "solar_power_actual_mw": null,
+            "wind_power_pred_mw": null,
+            "wind_power_actual_mw": null
+        }
+    ],
+    "ingested_files": [
+        {
+            "path": "/run/media/grid/Seagate Hub/GRID_INDIA/PANKHI/new_solar/results_nowcast/MH_200126/Five_Star_MIDC_220kV_200126.csv",
+            "mtime": 1770662964,
+            "size": 18347,
+            "sha1": "487404c599b945c4edd450e7d65eee238e2cb109",
+            "model_name": "NOWCAST",
+            "ingested_at": "2026-02-16 14:10:46.290983+00:00"
+        },
+        {
+            "path": "/run/media/grid/Seagate Hub/GRID_INDIA/PANKHI/new_solar/results_nowcast/MH_200126/Fermi_Solar_132kV_200126.csv",
+            "mtime": 1770663063,
+            "size": 14976,
+            "sha1": "a9993cc86c088a3591ad7602106461b592dce0c6",
+            "model_name": "NOWCAST",
+            "ingested_at": "2026-02-16 14:10:46.160979+00:00"
+        },
+        {
+            "path": "/run/media/grid/Seagate Hub/GRID_INDIA/PANKHI/new_solar/results_nowcast/MH_200126/Chandrapur_33kV_200126.csv",
+            "mtime": 1770663158,
+            "size": 16083,
+            "sha1": "baab88d4b81f3fae3364173f478c3ab19201b834",
+            "model_name": "NOWCAST",
+            "ingested_at": "2026-02-16 14:10:46.024618+00:00"
+        },
+        {
+            "path": "/run/media/grid/Seagate Hub/GRID_INDIA/PANKHI/new_solar/results_nowcast/MH_190126/Warora_220kV_190126.csv",
+            "mtime": 1770660619,
+            "size": 13703,
+            "sha1": "96bfe2f1eb7bfaee736b0991e5da7d2b0f6ef573",
+            "model_name": "NOWCAST",
+            "ingested_at": "2026-02-16 14:10:45.890981+00:00"
+        },
+        {
+            "path": "/run/media/grid/Seagate Hub/GRID_INDIA/PANKHI/new_solar/results_nowcast/MH_190126/Walwhan_132kV_190126.csv",
+            "mtime": 1770660707,
+            "size": 16567,
+            "sha1": "e1fb7ada6bfe388a6512a53b934f009ee92048f9",
+            "model_name": "NOWCAST",
+            "ingested_at": "2026-02-16 14:10:45.740338+00:00"
+        }
+    ]
+}
