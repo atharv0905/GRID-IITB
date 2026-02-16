@@ -38,7 +38,7 @@ except Exception:
 # -----------------------------
 DAYFIRST = os.environ.get("DAYFIRST", "1").strip() not in ("0", "false", "False", "no")
 
-API_BASE = os.environ.get("API_BASE", "http://10.135.5.11:8000")
+API_BASE = os.environ.get("API_BASE", "http://72.62.231.249:8050")
 SHAPEFILE_PATH = os.environ.get("SHAPEFILE_PATH", "../data/India_State_Boundary_FIXED_4326.shp")
 
 FORECAST_ORDER = ["Nowcasting", "Intra", "Inter", "Medium"]
