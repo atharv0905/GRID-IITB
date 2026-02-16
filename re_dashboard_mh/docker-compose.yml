@@ -23,3 +23,15 @@ services:
       - "8000:8000"
     depends_on:
       - db
+
+  dashboard:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - ./dashboard:/app
+    command: bash -lc "pip install -r requirements.txt && python app.py"
+    ports:
+      - "8050:8050"
+    depends_on:
+      - api
+

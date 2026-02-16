@@ -1,8 +1,11 @@
-streamlit>=1.35
-requests>=2.31
-plotly>=5.20
+dash>=2.15
+dash-bootstrap-components>=1.6
+dash-leaflet>=1.0
+flask>=2.3
 pandas>=2.0
+plotly>=5.20
+requests>=2.31
 folium>=0.16
-streamlit-folium>=0.20
 geopandas>=0.14
 shapely>=2.0
+psycopg2-binary>=2.9
