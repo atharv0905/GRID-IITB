@@ -7,6 +7,7 @@ from typing import Optional, List, Dict, Any
 
 from fastapi import FastAPI, Query
 from sqlalchemy import create_engine, text
+import uvicorn
 
 DATABASE_URL = os.environ.get(
     "DATABASE_URL",
@@ -55,6 +56,21 @@ def login(request: LoginRequest):
         return {"success": True, "message": "Login successful"}
     else:
         return {"success": False, "message": "Invalid credentials"}
+
+class DataWrapper(BaseModel):
+    data: Dict[str, Any]
+    
+@app.post("/data")
+def receive_data(wrapper: DataWrapper):
+    payload = wrapper.data   # <-- unwrap here
+
+    print("Received data payload:", payload)
+
+    return {
+        "status": "success",
+        "message": "Data received",
+        "records_received": len(payload) if isinstance(payload, list) else 1
+    }
 
 @app.get("/regions")
 def regions():
@@ -151,3 +167,6 @@ def series(plant_id: str, run_id: str):
     with engine.begin() as conn:
         rows = conn.execute(text(q), {"pid": plant_id, "rid": run_id}).mappings().all()
     return {"run_id": run_id, "items": list(rows)}
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)

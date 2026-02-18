@@ -1005,3 +1005,168 @@ div[class*="indicatorContainer"] {
   background-color: rgba(20,24,31,0.50) !important;
   opacity: 0.55;
 }
+
+/* =========================
+   CONTROLS PANEL FIX (scoped)
+   Put this at the VERY END
+   ========================= */
+
+.controls-panel{
+  overflow: visible;               /* allow menus/calendars to float */
+}
+
+.controls-panel .ctl-label{
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(233,238,246,.82);
+  margin: 0 0 6px 0;
+}
+
+.controls-panel .ctl-hint{
+  font-size: 12px;
+  opacity: .75;
+  margin-top: 6px;
+}
+
+/* ----- Dropdown: make the control solid dark + readable ----- */
+.controls-panel .ctl-dd{
+  width: 100%;
+}
+
+.controls-panel .ctl-dd .Select-control{
+  background: rgba(20,24,31,0.95) !important;
+  border: 1px solid rgba(255,255,255,0.14) !important;
+  border-radius: 10px !important;
+  min-height: 38px !important;
+  box-shadow: none !important;
+}
+
+.controls-panel .ctl-dd .Select-placeholder,
+.controls-panel .ctl-dd .Select-value-label{
+  color: rgba(233,238,246,.92) !important;
+}
+
+.controls-panel .ctl-dd .Select-input > input{
+  color: rgba(233,238,246,.92) !important;
+}
+
+.controls-panel .ctl-dd .Select.is-open > .Select-control,
+.controls-panel .ctl-dd .Select.is-focused > .Select-control{
+  border-color: rgba(255,255,255,0.22) !important;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.10) !important;
+}
+
+/* Dropdown menu */
+.controls-panel .ctl-dd .Select-menu-outer{
+  background: rgba(18,24,34,.98) !important;
+  border: 1px solid rgba(255,255,255,0.14) !important;
+  border-radius: 10px !important;
+  z-index: 30000 !important;
+  box-shadow: 0 14px 40px rgba(0,0,0,.55) !important;
+}
+
+.controls-panel .ctl-dd .Select-option{
+  background: transparent !important;
+  color: rgba(233,238,246,.92) !important;
+  padding: 10px 12px !important;
+}
+
+.controls-panel .ctl-dd .Select-option.is-focused,
+.controls-panel .ctl-dd .Select-option:hover{
+  background: rgba(74,144,226,0.22) !important;
+  color: #fff !important;
+}
+
+.controls-panel .ctl-dd .Select-option.is-selected{
+  background: rgba(244,163,64,0.28) !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+}
+
+/* ----- DatePickerSingle (Run date) dark theme ----- */
+.controls-panel .ctl-date{
+  width: 100%;
+}
+
+.controls-panel .SingleDatePicker,
+.controls-panel .SingleDatePickerInput,
+.controls-panel .SingleDatePickerInput__withBorder{
+  width: 100% !important;
+  background: rgba(20,24,31,0.95) !important;
+  border: 1px solid rgba(255,255,255,0.14) !important;
+  border-radius: 10px !important;
+}
+
+.controls-panel .DateInput{
+  width: 100% !important;
+  background: transparent !important;
+}
+
+.controls-panel .DateInput_input{
+  width: 100% !important;
+  background: transparent !important;     /* remove white input */
+  color: rgba(233,238,246,.92) !important;
+  border: 0 !important;
+  padding: 8px 10px !important;
+  font-size: 13px !important;
+}
+
+.controls-panel .DateInput_input::placeholder{
+  color: rgba(233,238,246,.55) !important;
+}
+
+.controls-panel .SingleDatePicker_picker{
+  z-index: 30000 !important;
+  background: rgba(18,24,34,.98) !important;
+  border: 1px solid rgba(255,255,255,0.14) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 14px 40px rgba(0,0,0,.55) !important;
+}
+
+/* Calendar day colors */
+.controls-panel .CalendarDay__default{
+  background: rgba(18,24,34,.98) !important;
+  color: rgba(233,238,246,.90) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+.controls-panel .CalendarDay__selected,
+.controls-panel .CalendarDay__selected:hover{
+  background: rgba(255,209,102,0.35) !important;
+  border: 1px solid rgba(255,209,102,0.60) !important;
+  color: rgba(233,238,246,.95) !important;
+}
+
+/* Make the switch align nicely */
+.controls-panel .ctl-switch{
+  margin-top: 4px;
+}
+
+
+
+/* ===== FIX: dropdown option background not transparent ===== */
+/* Applies to all Dash dropdowns. If you want only Controls panel, prefix with .controls-panel */
+
+.Select-menu-outer{
+  background-color: rgba(18,24,34,0.98) !important;
+}
+
+.Select-menu{
+  background-color: rgba(18,24,34,0.98) !important;
+}
+
+.Select-option{
+  background-color: rgba(18,24,34,0.98) !important;   /* normal row */
+  color: rgba(233,238,246,0.92) !important;
+}
+
+.Select-option.is-focused,
+.Select-option:hover{
+  background-color: rgba(74,144,226,0.25) !important;  /* hover */
+  color: #fff !important;
+}
+
+.Select-option.is-selected{
+  background-color: rgba(244,163,64,0.30) !important;  /* selected */
+  color: #fff !important;
+}

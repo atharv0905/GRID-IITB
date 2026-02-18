@@ -540,72 +540,67 @@ def dashboard_layout():
             [
                 # Controls
                 dbc.Col(
-                    html.Div(
-                        [
-                            html.H5("Controls", className="section-title"),
-                            html.Hr(),
+                        html.Div(
+                            [
+                                html.H5("Controls", className="section-title"),
+                                html.Hr(),
 
-                            dbc.Label("Forecast"),
-                            dcc.Dropdown(
-                                id="dd_forecast",
-                                options=[{"label": k, "value": k} for k in FORECAST_ORDER],
-                                value="Nowcasting",
-                                clearable=False,
-                            ),
+                                dbc.Label("Forecast", className="ctl-label"),
+                                dcc.Dropdown(
+                                    id="dd_forecast",
+                                    className="ctl-dd",
+                                    options=[{"label": k, "value": k} for k in FORECAST_ORDER],
+                                    value="Nowcasting",
+                                    clearable=False,
+                                ),
 
-                            html.Br(),
-                            dbc.Label("Region"),
-                            dcc.Dropdown(id="dd_region", options=[], value=None, clearable=False),
+                                html.Br(),
+                                dbc.Label("Region", className="ctl-label"),
+                                dcc.Dropdown(id="dd_region", className="ctl-dd", options=[], value=None, clearable=False),
 
-                            html.Br(),
-                            dbc.Label("Plant"),
-                            dcc.Dropdown(id="dd_plant", options=[], value=None, clearable=False),
+                                html.Br(),
+                                dbc.Label("Plant", className="ctl-label"),
+                                dcc.Dropdown(id="dd_plant", className="ctl-dd", options=[], value=None, clearable=False),
 
-                            html.Br(),
-                            dbc.Label("Revision"),
-                            dcc.Dropdown(id="dd_revision", options=[], value="LATEST", clearable=False),
-                            html.Br(),
-                            dbc.Label("Run date"),
-                            dcc.DatePickerSingle(
-                                id="dp_run_date",
-                                display_format="YYYY-MM-DD",
-                                date=None,
-                                clearable=True,
-                            ),
-                            html.Div(id="run_date_hint", style={"fontSize": "12px", "opacity": 0.75, "marginTop": "4px"}),
+                                html.Br(),
+                                dbc.Label("Revision", className="ctl-label"),
+                                dcc.Dropdown(id="dd_revision", className="ctl-dd", options=[], value="LATEST", clearable=False),
 
-                            html.Br(),
-                            # dbc.Label("Download date range"),
-                            # dcc.DatePickerRange(
-                            #     id="dp_dl_range",
-                            #     display_format="YYYY-MM-DD",
-                            #     start_date=None,
-                            #     end_date=None,
-                            #     clearable=True,
-                            # ),
-                            # html.Div(id="dl_range_hint", style={"fontSize": "12px", "opacity": 0.75, "marginTop": "4px"}),
+                                html.Br(),
+                                dbc.Label("Run date", className="ctl-label"),
+                                dcc.DatePickerSingle(
+                                    id="dp_run_date",
+                                    className="ctl-date",
+                                    display_format="YYYY-MM-DD",
+                                    date=None,
+                                    clearable=True,
+                                ),
+                                html.Div(id="run_date_hint", className="ctl-hint"),
 
+                                html.Br(),
+                                html.Hr(),
 
-                            html.Hr(),
-                            dbc.Checklist(
-                                id="ck_autorefresh",
-                                options=[{"label": "Auto-refresh", "value": "on"}],
-                                value=["on"],
-                                switch=True,
-                            ),
+                                dbc.Checklist(
+                                    id="ck_autorefresh",
+                                    options=[{"label": "Auto-refresh", "value": "on"}],
+                                    value=["on"],
+                                    switch=True,
+                                    className="ctl-switch",
+                                ),
 
-                            dbc.Label("Refresh interval (minutes)"),
-                            dcc.Slider(
-                                id="sl_refresh",
-                                min=5, max=60, step=None,
-                                value=5,
-                                marks={5:"5",10:"10",15:"15",30:"30",60:"60"},
-                            ),
+                                dbc.Label("Refresh interval (minutes)", className="ctl-label"),
+                                dcc.Slider(
+                                    id="sl_refresh",
+                                    min=5, max=60, step=None,
+                                    value=5,
+                                    marks={5:"5",10:"10",15:"15",30:"30",60:"60"},
+                                ),
 
-                            dcc.Interval(id="interval", interval=5*60*1000, n_intervals=0, disabled=False),
-                        ],
-                        className="panel",
-                    ),
+                                dcc.Interval(id="interval", interval=5*60*1000, n_intervals=0, disabled=False),
+                            ],
+                            className="panel controls-panel",
+                        )
+,
                     md=3, lg=3, className="h-100",
                 ),
 
