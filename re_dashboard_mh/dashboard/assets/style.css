@@ -1,1172 +1,203 @@
-:root{
-  --bg0:#0b0f14;
-  --bg1:#0e1116;
-  --card:#121822;
-  --card2:#0f141d;
-  --stroke:rgba(255,255,255,.08);
-  --text:rgba(233,238,246,.95);
-  --muted:rgba(233,238,246,.65);
-  --shadow:0 18px 40px rgba(0,0,0,.40);
-  --r:16px;
+:root {
+  --bg0: #0b0f14;
+  --bg1: #0e1116;
+  --card: #121822;
+  --card2: #0f141d;
+  --stroke: rgba(255, 255, 255, 0.08);
+  --text: rgba(233, 238, 246, 0.95);
+  --muted: rgba(233, 238, 246, 0.65);
+  --shadow: 0 18px 40px rgba(0, 0, 0, 0.40);
+  --r: 16px;
+  --accent: #4a90e2;
 }
 
-body{
+body {
   background: radial-gradient(1100px 700px at 18% 0%, #1b2028 0%, var(--bg1) 55%, var(--bg0) 100%) !important;
   color: var(--text) !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-.card {
-  border-radius: 16px !important;
-  border: 1px solid rgba(255,255,255,0.10) !important;
-  background: rgba(18,22,28,0.86) !important;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.22) !important;
-}
+/* -----------------------------
+   Layout & Panels
+   ----------------------------- */
+.page-title { text-align: center; margin: 18px 0 0; font-weight: 800; letter-spacing: 0.2px; }
+.page-subtitle { text-align: center; color: var(--muted); margin: 6px 0 18px; letter-spacing: 0.5px; font-size: 0.9rem; }
+.page-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin: 4px 0 12px; }
+.page-title-wrap { flex: 1 1 auto; }
+.logout-btn { margin-top: 18px; white-space: nowrap; }
 
-h1,h2,h3{ 
-  letter-spacing:.2px; 
-}
-
-h2, h5 { 
-  letter-spacing: 0.3px; 
-}
-/* Scrollable table container */
-.table-scroll{
-  max-height: 420px;      /* adjust if you want taller/shorter */
-  overflow-y: auto;
-  overflow-x: auto;
-  position: relative;     /* helps sticky header work reliably */
-  border-radius: 14px;
-}
-
-.page-title{ 
-  text-align:center; 
-  margin:18px 0 0; 
-  font-weight:800; 
-}
-
-.page-header{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:16px;
-  margin:4px 0 2px;
-}
-
-.page-title-wrap{
-  flex:1 1 auto;
-  min-width:0;
-}
-
-.page-subtitle{ 
-  text-align:center; 
-  color:var(--muted); 
-  margin:6px 0 18px; 
-}
-
-.logout-btn{
-  margin-top: 18px;
-  white-space: nowrap;
-}
-
-.panel{
-  background: linear-gradient(180deg, rgba(18,24,34,.92), rgba(14,18,26,.92));
+.panel {
+  background: linear-gradient(180deg, rgba(18, 24, 34, 0.92), rgba(14, 18, 26, 0.92));
   border: 1px solid var(--stroke);
   border-radius: var(--r);
   box-shadow: var(--shadow);
-  padding:16px;
+  padding: 16px;
+  height: 100%;
+  overflow: visible; /* CRITICAL: Allows dropdowns to spill out */
 }
 
-.charts_section_hide{
-  display:none;
-}
-
-.section-title{
-  font-size:16px;
-  font-weight:800;
-  color:rgba(233,238,246,.92);
-  margin:0 0 12px;
-}
-
-.kpi-tile{
-  background: linear-gradient(135deg, rgba(34,46,74,.92), rgba(18,22,28,.92));
-  border: 1px solid rgba(255,255,255,.10);
-  border-radius: 14px;
-  padding: 14px;
-}
-
-.kpi-value{ 
-  font-size: 22px; 
-  font-weight: 900; 
-  margin:0; 
-}
-
-.kpi-label{ 
-  font-size: 12px; 
-  color: var(--muted); 
-  margin-top:6px; 
-}
-
-.kpi-sub{ 
-  font-size: 12px; 
-  color: rgba(170,210,255,.95); 
-  margin-top:6px; 
-}
-
-.leaflet-container{
-  border-radius: 14px !important;
-}
-
-.js-plotly-plot .plotly{
-  border-radius: 14px;
-}
-
-.table{
-  color: rgba(233,238,246,.92) !important;
-}
-
-.table thead th{
-  position: sticky;
-  top: 0;
-  background: rgba(18,24,34,.98) !important;
-  z-index: 2;
-}
-
-/* Dark dropdown styling */
-.Select-control {
-  background-color: rgba(20,24,31,0.95) !important;
-  border: 1px solid rgba(255,255,255,0.12) !important;
-  color: #e9eef6 !important;
-}
-
-.Select-menu-outer {
-  background-color: rgba(20,24,31,0.98) !important;
-  border: 1px solid rgba(255,255,255,0.12) !important;
-}
-
-.Select-option { 
-  color: #e9eef6 !important; 
-}
-
-.Select-option.is-focused { 
-  background: rgba(255,255,255,0.08) !important; 
-}
-
-.Select-value-label { 
-  color: #e9eef6 !important; 
-}
-
-.Select-placeholder { 
-  color: rgba(233,238,246,0.65) !important; 
-}
-
-/* Summary vertical stack */
-.summary-stack{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-/* Make map occupy panel better */
-.map-panel{ padding: 14px; }
-.map-wrap{ margin-top:10px; padding:0; }
-.map-wrap .leaflet-container{
-  border-radius: 14px !important;
-}
-
-/* Slightly tighter column gap */
-.g-3{ --bs-gutter-x: 1rem; --bs-gutter-y: 1rem; }
-
-/* 2x2 grid with spacing */
-.charts-grid{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:16px;
-}
-
-/* Each chart becomes a separate card */
-.chart-card{
-  border:1px solid rgba(255,255,255,0.10);
-  border-radius:16px;
-  background:rgba(10,14,20,0.55);
-  box-shadow:0 10px 28px rgba(0,0,0,0.35);
-  padding:10px 10px 6px 10px;
-}
-
-/* remove inner graph extra padding */
-.chart-card .js-plotly-plot,
-.chart-card .plot-container{
-  border-radius:12px;
-}
-
-/* Optional: tighter title look */
-.chart-card .gtitle{
-  font-weight:700 !important;
-}
-
-/* Center table values and headers */
-.table-centered {
-  text-align: center !important;
-}
-
-.table-centered thead th {
-  text-align: center !important;
-  font-weight: 700 !important;
-  background: rgba(18,24,34,.98) !important;
-  border-bottom: 2px solid rgba(255,255,255,.15) !important;
-  padding: 12px 8px !important;
-}
-
-.table-centered tbody td {
-  text-align: center !important;
-  padding: 10px 8px !important;
-  vertical-align: middle !important;
-}
-
-.table-centered tbody tr:hover {
-  background: rgba(255,255,255,.05) !important;
-}
-
-/* Responsive table */
-.table-centered {
-  font-size: 13px;
-  word-break: break-word;
-}
-
-@media (max-width: 768px) {
-  .table-centered {
-    font-size: 11px;
-  }
-  
-  .table-centered thead th,
-  .table-centered tbody td {
-    padding: 6px 4px !important;
-  }
-}
-
-/* Mobile fallback */
-@media (max-width: 992px){
-  .charts-grid{ grid-template-columns:1fr; }
-}
+.section-title { font-size: 16px; font-weight: 800; color: rgba(233, 238, 246, 0.92); margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* -----------------------------
-   Dark theme for Dash DatePickers (react-dates)
+   KPI Cards
    ----------------------------- */
+.summary-stack { display: flex; flex-direction: column; gap: 12px; }
+.kpi-tile { background: linear-gradient(135deg, rgba(34, 46, 74, 0.4), rgba(18, 22, 28, 0.4)); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 14px; }
+.kpi-value { font-size: 22px; font-weight: 900; margin: 0; color: #fff; }
+.kpi-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.kpi-sub { font-size: 11px; color: rgba(170, 210, 255, 0.8); margin-top: 4px; }
 
-/* Make picker inputs full width like dropdowns */
-.SingleDatePicker,
-.DateRangePicker {
-  width: 100% !important;
+/* -----------------------------
+   Maps & Charts
+   ----------------------------- */
+.map-panel { padding: 12px; }
+.map-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; margin-bottom: 10px; background: rgba(0, 0, 0, 0.2); border-radius: 10px; }
+.plant-meta-inline { text-align: right; font-size: 12px; color: var(--muted); }
+.meta-line1 { font-weight: bold; color: var(--text); }
+.leaflet-container { border-radius: 14px; background: #0b0f14 !important; }
+
+.chart-card { border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; background: rgba(10, 14, 20, 0.4); padding: 10px; }
+.charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 992px) { .charts-grid { grid-template-columns: 1fr; } }
+.charts_section_hide { display: none; }
+
+/* -----------------------------
+   Tables
+   ----------------------------- */
+.table-scroll { max-height: 420px; overflow-y: auto; border-radius: 14px; border: 1px solid var(--stroke); }
+.table { color: var(--text) !important; margin-bottom: 0 !important; }
+.table thead th { position: sticky; top: 0; background: #151a21 !important; z-index: 2; border-bottom: 2px solid rgba(255, 255, 255, 0.1); color: #fff; }
+.table-centered td, .table-centered th { text-align: center !important; vertical-align: middle !important; }
+.data-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+.ctl-label { font-size: 12px; font-weight: 700; color: rgba(233, 238, 246, 0.8); margin-bottom: 4px; display: block; }
+
+/* =========================================================
+   FIX 1: DROPDOWN MENUS (The White List Issue)
+   ========================================================= */
+
+/* 1. The Container of the list (The box that pops open) */
+.Select-menu-outer, .VirtualizedSelectMenu {
+    background-color: #161b22 !important;  /* Dark background */
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #e9eef6 !important;             /* Text Color */
+    z-index: 9999 !important;              /* Force it on top of the map */
 }
 
-.SingleDatePickerInput,
-.DateRangePickerInput {
-  width: 100% !important;
-  background: rgba(20,24,31,0.95) !important;
-  border: 1px solid rgba(255,255,255,0.12) !important;
-  border-radius: 10px !important;
+/* 2. The Options inside the list */
+.Select-option, .VirtualizedSelectOption {
+    background-color: #161b22 !important;
+    color: rgba(233, 238, 246, 0.8) !important;
 }
 
-.SingleDatePickerInput__withBorder,
-.DateRangePickerInput__withBorder {
-  border: 1px solid rgba(255,255,255,0.12) !important;
+/* 3. Hover State (When you mouse over an item) */
+.Select-option:hover, 
+.VirtualizedSelectOptionFocused {
+    background-color: rgba(74, 144, 226, 0.25) !important; /* Blue Highlight */
+    color: #ffffff !important;
 }
 
-/* Individual date input boxes */
-.DateInput {
-  width: 100% !important;
-  background: transparent !important;
+/* =========================================================
+   FIX 2: DATE PICKERS (Dark Mode Override)
+   ========================================================= */
+.SingleDatePickerInput {
+  background-color: rgba(20, 24, 31, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 8px !important;
+  display: block !important;
 }
 
+.DateInput { width: 100% !important; background-color: transparent !important; }
 .DateInput_input {
-  background: transparent !important;
-  color: rgba(233,238,246,.95) !important;
-  border: none !important;
-  font-size: 13px !important;
-  padding: 8px 10px !important;
-}
-
-.DateInput_input__focused {
-  background: rgba(255,255,255,0.06) !important;
-  border: none !important;
-}
-
-/* Placeholder */
-.DateInput_input::placeholder {
-  color: rgba(233,238,246,0.55) !important;
-}
-
-/* Calendar popup */
-.SingleDatePicker_picker,
-.DateRangePicker_picker {
-  background: rgba(18,24,34,.98) !important;
-  border: 1px solid rgba(255,255,255,0.12) !important;
-  border-radius: 14px !important;
-  box-shadow: 0 18px 40px rgba(0,0,0,.40) !important;
-}
-
-/* Month container */
-.DayPicker,
-.DayPicker__withBorder,
-.CalendarMonth,
-.CalendarMonth_table {
-  background: rgba(18,24,34,.98) !important;
-}
-
-/* Month title */
-.CalendarMonth_caption,
-.CalendarMonth_caption strong {
-  color: rgba(233,238,246,.92) !important;
-}
-
-/* Weekday header */
-.DayPicker_weekHeader_ul li {
-  color: rgba(233,238,246,.65) !important;
-}
-
-/* Day cells */
-.CalendarDay__default {
-  background: rgba(18,24,34,.98) !important;
-  color: rgba(233,238,246,.90) !important;
-  border: 1px solid rgba(255,255,255,0.08) !important;
-}
-
-.CalendarDay__default:hover {
-  background: rgba(255,255,255,0.08) !important;
-}
-
-/* Selected day */
-.CalendarDay__selected,
-.CalendarDay__selected:hover {
-  background: rgba(255,209,102,0.35) !important;  /* matches your SELECTED_RING vibe */
-  color: rgba(233,238,246,.95) !important;
-  border: 1px solid rgba(255,209,102,0.60) !important;
-}
-
-/* Range span days */
-.CalendarDay__hovered_span,
-.CalendarDay__hovered_span:hover,
-.CalendarDay__selected_span,
-.CalendarDay__selected_span:hover {
-  background: rgba(74,144,226,0.18) !important;
-  color: rgba(233,238,246,.95) !important;
-  border: 1px solid rgba(74,144,226,0.25) !important;
-}
-
-/* Disabled/out-of-range */
-.CalendarDay__blocked_out_of_range,
-.CalendarDay__blocked_out_of_range:hover {
-  background: rgba(18,24,34,.98) !important;
-  color: rgba(233,238,246,.30) !important;
-  border: 1px solid rgba(255,255,255,0.05) !important;
-}
-
-/* Nav arrows */
-.DayPickerNavigation_button {
-  border: 1px solid rgba(255,255,255,0.12) !important;
-  background: rgba(255,255,255,0.06) !important;
-}
-
-.DayPickerNavigation_button:hover {
-  background: rgba(255,255,255,0.10) !important;
-}
-
-/* Fix the small triangle/caret on popup */
-.DayPicker__horizontal {
-  border-radius: 14px !important;
-}
-
-/* -----------------------------
-   Optional: better scrollbars for table-scroll
-   ----------------------------- */
-.table-scroll::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-.table-scroll::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.18);
-  border-radius: 10px;
-  border: 2px solid rgba(0,0,0,0);
-  background-clip: padding-box;
-}
-
-.table-scroll::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.06);
-  border-radius: 10px;
-}
-
-/* Keep table tight inside scroll wrapper */
-.table-scroll .table {
-  margin-bottom: 0 !important;
-}
-
-/* ---------- Compact Download bar (Date range + button) ---------- */
-.download-bar{
-  display:flex;
-  justify-content:flex-end;
-  align-items:center;
-  gap:12px;
-  flex-wrap:wrap;
-}
-
-/* ---------- FORCE Download DateRangePicker to be single-row ---------- */
-.dl-range-compact,
-.dl-range-compact *{
-  box-sizing: border-box;
-}
-
-.dl-range-compact .DateRangePicker,
-.dl-range-compact.DateRangePicker{
-  width: auto !important;
-}
-
-.dl-range-compact .DateRangePickerInput,
-.dl-range-compact .DateRangePickerInput__withBorder{
-  width: auto !important;
-  display: inline-flex !important;     /* KEY: keep From + To in one row */
-  flex-direction: row !important;
-  align-items: center !important;
-  white-space: nowrap !important;
-  gap: 0 !important;
-}
-
-/* Override your global DateInput width:100% ONLY here */
-.dl-range-compact .DateInput{
-  width: 120px !important;
-  display: inline-block !important;
-  background: transparent !important;
-}
-
-.dl-range-compact .DateInput_input{
-  width: 120px !important;
-  display: inline-block !important;
-  padding: 6px 8px !important;
-  font-size: 12px !important;
-  background: transparent !important;
-  border: none !important;
-}
-
-.dl-range-compact .DateRangePickerInput_arrow{
-  display: inline-flex !important;
-  align-items: center !important;
-  padding: 0 6px !important;
-}
-
-/* Make it look compact + professional */
-.dl-range-compact .DateRangePickerInput{
-  background: rgba(20,24,31,0.95) !important;
-  border: 1px solid rgba(255,255,255,0.12) !important;
-  border-radius: 10px !important;
-  padding: 2px 4px !important;
-}
-/* ============================
-   DATA HEADER: single-row layout
-   ============================ */
-.data-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-  flex-wrap:nowrap;
-}
-
-.data-left{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  flex-wrap:nowrap;
-  min-width: 280px;
-}
-
-.data-hint-inline{
-  font-size: 12px;
-  opacity: 0.70;
-  margin: 0;
-  white-space: nowrap;
-}
-
-/* Right side (date range + button) */
-.download-bar{
-  display:flex;
-  align-items:center;
-  justify-content:flex-end;
-  gap:10px;
-  flex-wrap:nowrap;
-  white-space: nowrap;
-}
-
-/* ============================
-   COMPACT DateRangePicker (ONLY in download bar)
-   Force From/To on SAME ROW + prevent wrapping
-   ============================ */
-.dl-range-compact,
-.dl-range-compact *{
-  box-sizing:border-box;
-}
-
-/* Override your global width:100% only here */
-.dl-range-compact.DateRangePicker,
-.dl-range-compact .DateRangePicker{
-  width:auto !important;
-}
-
-.dl-range-compact .DateRangePickerInput,
-.dl-range-compact .DateRangePickerInput__withBorder{
-  width:auto !important;
-  display:inline-flex !important;     /* keeps From + To in one row */
-  flex-direction:row !important;
-  align-items:center !important;
-  white-space:nowrap !important;
-  padding: 2px 4px !important;
-  border-radius: 10px !important;
-}
-
-/* Critical: your global .DateInput { width:100% } breaks inline layout */
-.dl-range-compact .DateInput{
-  width: 120px !important;
-  display:inline-block !important;
-}
-
-.dl-range-compact .DateInput_input{
-  width: 120px !important;
-  display:inline-block !important;
-  padding: 6px 8px !important;
-  font-size: 12px !important;
-}
-
-/* Keep arrow compact */
-.dl-range-compact .DateRangePickerInput_arrow{
-  display:inline-flex !important;
-  align-items:center !important;
-  padding: 0 6px !important;
-}
-
-/* ============================
-   FIX OVERLAP: open calendar UPWARD (so it doesn't cover table)
-   ============================ */
-.dl-range-compact .DateRangePicker_picker{
-  z-index: 5000 !important;
-  top: auto !important;
-  bottom: 44px !important;   /* opens above the inputs */
-  left: auto !important;
-  right: 0 !important;
-}
-
-/* Button height match */
-.dl-btn{
-  height: 34px;
-}
-/* ============================
-   Compact Plant Meta (left panel bottom)
-   ============================ */
-.compact-meta{
-  margin-top: 8px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(10,14,20,0.40);
-  line-height: 1.25;
-}
-
-/* Make each line tighter */
-.compact-meta > div{
-  margin: 0 0 6px 0 !important;
-}
-
-/* First line (Plant | State) more prominent but not huge */
-.compact-meta > div:first-child{
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 6px !important;
-}
-
-/* Other lines smaller + muted */
-.compact-meta > div:not(:first-child){
-  font-size: 12px;
-  opacity: 0.85;
-}
-
-/* Reduce extra spacing inside panel around meta */
-.panel .compact-meta{
-  margin-top: 10px;
-}
-
-/* On small screens, even tighter */
-@media (max-width: 992px){
-  .compact-meta{
-    padding: 8px 10px;
-  }
-  .compact-meta > div{
-    margin-bottom: 5px !important;
-  }
-}
-/* ===== Map header: title left, meta right (2 lines, clean) ===== */
-.map-header{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:12px;
-  padding:8px 12px 10px;
-  margin:0 0 10px;
-  border-radius:14px;
-  background:rgba(0,0,0,0.18);
-}
-/* Right meta */
-.plant-meta-inline{
-  flex:1 1 auto;
-  min-width:0;                 /* critical for wrapping inside flex */
-  text-align:right;
-  font-size:12px;
-  line-height:1.2;
-  opacity:.88;
-}
-
-
-/* Force true 2-line display (no ellipsis cutting) */
-.plant-meta-inline .meta-line1,
-.plant-meta-inline .meta-line2{
-  display:block;
-  white-space:normal;          /* allow wrap */
-  overflow:visible;
-  text-overflow:clip;
-}
-.plant-meta-inline .meta-line1{
-  font-weight:700;
-}
-
-.plant-meta-inline .meta-line2{
-  margin-top:2px;
-  font-size:11.5px;
-  opacity:.78;
-}
-
-/* On narrow screens, stack for readability */
-@media (max-width: 1200px){
-  .map-header{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-  .plant-meta-inline{
-    text-align:left;
-    width:100%;
-  }
-}
-/* KEY FIX:
-   - remove max-width cap
-   - allow flex to allocate remaining space
-   - min-width:0 is critical so ellipsis works correctly inside flex layouts */
-
-/* Make map panel spacing tighter so it looks aligned */
-.map-panel{ padding: 12px; }
-.map-wrap .leaflet-container{
-  height: 630px !important;   /* bump as needed */
-}
-/* ---------------------------
-   Geospatial header cleanup
----------------------------- */
-.geo-head{
-  display:flex;
-  flex-direction:column;
-  gap:3px;
-  padding:8px 12px 10px;
-  margin:0 0 10px;
-  border-radius:14px;
-  background:rgba(0,0,0,0.18);
-}
-
-/* Left title */
-.geo-title{
-  font-size:14px;
-  font-weight:800;
-  line-height:1.1;
-  margin:0;
-  opacity:.95;
-  white-space:nowrap;
-}
-
-.geo-meta{
-  font-size:12px;
-  line-height:1.15;
-  opacity:.85;
-  min-width:0;
-}
-
-.geo-meta .geo-line1,
-.geo-meta .geo-line2{
-  display:block;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-/* ---------------------------
-   Data header row alignment
----------------------------- */
-.data-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  flex-wrap:nowrap;
-}
-
-.data-left{
-  display:flex;
-  align-items:baseline;
-  gap:10px;
-  min-width:0;
-}
-
-.data-hint-inline{
-  font-size:12px;
-  opacity:.7;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  max-width:420px;
-}
-
-.download-bar{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  flex-wrap:nowrap;
-}
-
-.dl-btn{
-  white-space:nowrap;
-}
-
-/* ---------------------------
-   Date range compact + FIX: popup not fullscreen
----------------------------- */
-.panel{ overflow:visible; }  /* allow the calendar to float above panels */
-
-.dl-range-compact{
-  z-index:10;
-}
-
-.dl-range-compact .DateRangePickerInput{
-  display:flex;
-  align-items:center;
-  border-radius:10px;
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.12);
-}
-
-.dl-range-compact .DateInput{
-  width:110px;
-}
-
-.dl-range-compact input{
-  width:100%;
-  padding:6px 8px;
-  background:transparent;
-  border:0;
-  color:rgba(233,238,246,.92);
-  font-size:12px;
-}
-
-.dl-range-compact .DateRangePickerInput_arrow{
-  padding:0 6px;
-  opacity:.7;
-}
-
-.DateRangePicker_picker,
-.SingleDatePicker_picker{
-  z-index:20000 !important; /* ensure calendar appears above table/graphs */
-  box-shadow:0 14px 40px rgba(0,0,0,0.55);
-}
-
-/* ---------------------------
-   Optional: table scroll container (if you use it)
----------------------------- */
-.table-scroll{
-  max-height:520px;
-  overflow:auto;
-  border-radius:12px;
-}
-
-/* ============================
-   FIX: Dropdown dark background
-   ============================ */
-
-/* Main dropdown container */
-.Select-control,
-.VirtualizedSelectFocusedOption {
-  background-color: rgba(20,24,31,0.95) !important;
-  border: 1px solid rgba(255,255,255,0.12) !important;
-  color: #e9eef6 !important;
-}
-
-/* Dropdown when focused/open */
-.Select.is-focused > .Select-control,
-.Select.is-open > .Select-control {
-  background-color: rgba(20,24,31,0.98) !important;
-  border-color: rgba(255,255,255,0.18) !important;
-}
-
-/* Dropdown menu (the list that appears) */
-.Select-menu-outer,
-.VirtualizedSelectMenu {
-  background-color: rgba(18,24,34,0.98) !important;
-  border: 1px solid rgba(255,255,255,0.12) !important;
-  box-shadow: 0 10px 28px rgba(0,0,0,0.45) !important;
-}
-
-.Select-menu {
-  background-color: rgba(18,24,34,0.98) !important;
-}
-
-/* Individual dropdown options */
-.Select-option,
-.VirtualizedSelectOption {
-  background-color: rgba(18,24,34,0.98) !important;
-  color: #e9eef6 !important;
-}
-
-/* Hovered/focused option */
-.Select-option.is-focused,
-.Select-option:hover,
-.VirtualizedSelectOption:hover {
-  background-color: rgba(74,144,226,0.20) !important;
-  color: #fff !important;
-}
-
-/* Selected option in dropdown */
-.Select-option.is-selected {
-  background-color: rgba(244,163,64,0.25) !important;
-  color: #fff !important;
-}
-
-/* Selected value display */
-.Select-value,
-.Select-value-label {
-  color: #e9eef6 !important;
   background-color: transparent !important;
-}
-
-/* Placeholder text */
-.Select-placeholder,
-.Select--single > .Select-control .Select-value {
-  color: rgba(233,238,246,0.65) !important;
-}
-
-/* Input field inside dropdown */
-.Select-input > input {
+  border-bottom: none !important;
   color: #e9eef6 !important;
-}
-
-/* Dropdown arrow */
-.Select-arrow-zone,
-.Select-arrow {
-  opacity: 0.70;
-}
-
-/* Clear button (X) */
-.Select-clear-zone {
-  opacity: 0.65;
-}
-
-.Select-clear-zone:hover {
-  opacity: 0.90;
-}
-
-/* Multi-select values (if you use multi dropdowns) */
-.Select-value {
-  background-color: rgba(74,144,226,0.25) !important;
-  border: 1px solid rgba(74,144,226,0.35) !important;
-  color: #e9eef6 !important;
-}
-
-/* Disabled dropdown */
-.Select.is-disabled > .Select-control {
-  background-color: rgba(20,24,31,0.50) !important;
-  opacity: 0.55;
-}
-
-/* ============================
-   DASH DROPDOWN FIX (Modern Dash 2.0+)
-   Target the actual class names Dash uses
-   ============================ */
-
-/* Main dropdown wrapper */
-.dash-dropdown,
-.Select,
-div[class*="dropdown"] {
-  background: transparent !important;
-}
-
-/* The input/control area (where selected value shows) */
-.Select-control,
-div[class*="control"] {
-  background-color: rgba(20,24,31,0.95) !important;
-  border: 1px solid rgba(255,255,255,0.12) !important;
-  color: #e9eef6 !important;
-  min-height: 38px !important;
-}
-
-/* When dropdown is focused */
-.Select.is-focused > .Select-control,
-.Select.is-open > .Select-control {
-  background-color: rgba(20,24,31,0.98) !important;
-  border-color: rgba(255,255,255,0.22) !important;
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.15) !important;
-}
-
-/* The dropdown menu container */
-.Select-menu-outer,
-div[class*="menu"] {
-  background-color: rgba(18,24,34,0.98) !important;
-  border: 1px solid rgba(255,255,255,0.15) !important;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.50) !important;
-  border-radius: 10px !important;
-}
-
-.Select-menu {
-  background-color: transparent !important;
-}
-
-/* Individual menu options */
-.Select-option,
-div[class*="option"] {
-  background-color: transparent !important;
-  color: rgba(233,238,246,0.92) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
   padding: 8px 12px !important;
 }
 
-/* Hovered option */
-.Select-option:hover,
-.Select-option.is-focused,
-div[class*="option"]:hover {
-  background-color: rgba(74,144,226,0.25) !important;
-  color: #fff !important;
+.DateInput_input::placeholder { color: rgba(233, 238, 246, 0.5) !important; }
+.DateInput_input__focused { border-bottom: none !important; background-color: rgba(255, 255, 255, 0.05) !important; }
+
+/* Calendar Popup */
+.SingleDatePicker_picker {
+  background-color: #161b22 !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+  z-index: 1010 !important;
 }
 
-/* Selected option */
-.Select-option.is-selected {
-  background-color: rgba(244,163,64,0.30) !important;
-  color: #fff !important;
-  font-weight: 600 !important;
+.DayPicker, .DayPicker__withBorder, .CalendarMonth, .CalendarMonthGrid { background-color: #161b22 !important; }
+.CalendarMonth_caption { color: #fff !important; }
+.DayPicker_weekHeader_ul li { color: rgba(233, 238, 246, 0.6) !important; }
+.CalendarDay__default { background-color: #161b22 !important; color: #e9eef6 !important; border: 1px solid #222 !important; }
+.CalendarDay__default:hover { background-color: rgba(255, 255, 255, 0.1) !important; }
+.CalendarDay__selected { background-color: var(--accent) !important; border-color: var(--accent) !important; }
+
+
+/* =========================================================
+   FIX 3: SLIDERS (Invisible Numbers Fix)
+   ========================================================= */
+.rc-slider-mark-text {
+    color: rgba(233, 238, 246, 0.65) !important;
+    font-size: 12px !important;
+}
+.rc-slider-mark-text-active {
+    color: #ffffff !important;
+    font-weight: bold !important;
+}
+.rc-slider-rail { background-color: rgba(255, 255, 255, 0.15) !important; }
+.rc-slider-track { background-color: var(--accent) !important; }
+
+
+/* =========================================================
+   Compact Download Range (Bottom Panel)
+   ========================================================= */
+.download-bar { display: flex; align-items: center; gap: 8px; }
+.dl-range-compact .DateRangePickerInput {
+  background-color: rgba(20, 24, 31, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 6px !important;
+  padding: 0 5px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.dl-range-compact .DateInput { width: 90px !important; }
+.dl-range-compact .DateInput_input { font-size: 12px !important; padding: 4px !important; text-align: center !important; }
+.dl-range-compact .DateRangePickerInput_arrow { padding: 0 5px !important; }
+.DateRangePicker_picker { z-index: 9999 !important; }
+
+/* ============================
+   dcc.Dropdown search input bg
+   ============================ */
+
+/* the main closed dropdown control */
+.ctl-dd .Select-control {
+  background-color: #0f141d !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  color: rgba(233,238,246,0.95) !important;
 }
 
-/* The displayed value */
-.Select-value,
-.Select-value-label,
-div[class*="singleValue"],
-div[class*="placeholder"] {
-  color: rgba(233,238,246,0.92) !important;
-  background: transparent !important;
+/* the input wrapper (when dropdown is open & searchable) */
+.ctl-dd .Select-input {
+  background-color: #0f141d !important;
+  color: rgba(233,238,246,0.95) !important;
 }
 
-/* Placeholder text */
-.Select-placeholder {
+/* the actual search <input> element */
+.ctl-dd .Select-input > input {
+  background-color: #0f141d !important;
+  color: rgba(233,238,246,0.95) !important;
+  caret-color: rgba(233,238,246,0.95) !important;
+}
+
+/* placeholder text in the search input */
+.ctl-dd .Select-input > input::placeholder {
   color: rgba(233,238,246,0.55) !important;
 }
 
-/* Input field (when typing to search) */
-.Select-input,
-.Select-input > input,
-div[class*="Input"] input {
-  color: rgba(233,238,246,0.92) !important;
-  background: transparent !important;
-}
-
-/* Dropdown arrow indicator */
-.Select-arrow-zone,
-.Select-arrow,
-div[class*="indicatorContainer"] {
-  color: rgba(233,238,246,0.65) !important;
-  opacity: 0.75;
-}
-
-.Select-arrow-zone:hover {
-  opacity: 1;
-}
-
-/* Clear button (X) */
-.Select-clear-zone {
-  opacity: 0.65;
-}
-
-.Select-clear-zone:hover {
-  opacity: 0.90;
-}
-
-/* Multi-select values (if you use multi dropdowns) */
-.Select-value {
-  background-color: rgba(74,144,226,0.25) !important;
-  border: 1px solid rgba(74,144,226,0.35) !important;
-  color: #e9eef6 !important;
-}
-
-/* Disabled dropdown */
-.Select.is-disabled > .Select-control {
-  background-color: rgba(20,24,31,0.50) !important;
-  opacity: 0.55;
-}
-
-/* =========================
-   CONTROLS PANEL FIX (scoped)
-   Put this at the VERY END
-   ========================= */
-
-.controls-panel{
-  overflow: visible;               /* allow menus/calendars to float */
-}
-
-.controls-panel .ctl-label{
-  font-size: 12px;
-  font-weight: 700;
-  color: rgba(233,238,246,.82);
-  margin: 0 0 6px 0;
-}
-
-.controls-panel .ctl-hint{
-  font-size: 12px;
-  opacity: .75;
-  margin-top: 6px;
-}
-
-/* ----- Dropdown: make the control solid dark + readable ----- */
-.controls-panel .ctl-dd{
-  width: 100%;
-}
-
-.controls-panel .ctl-dd .Select-control{
-  background: rgba(20,24,31,0.95) !important;
-  border: 1px solid rgba(255,255,255,0.14) !important;
-  border-radius: 10px !important;
-  min-height: 38px !important;
-  box-shadow: none !important;
-}
-
-.controls-panel .ctl-dd .Select-placeholder,
-.controls-panel .ctl-dd .Select-value-label{
-  color: rgba(233,238,246,.92) !important;
-}
-
-.controls-panel .ctl-dd .Select-input > input{
-  color: rgba(233,238,246,.92) !important;
-}
-
-.controls-panel .ctl-dd .Select.is-open > .Select-control,
-.controls-panel .ctl-dd .Select.is-focused > .Select-control{
-  border-color: rgba(255,255,255,0.22) !important;
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.10) !important;
-}
-
-/* Dropdown menu */
-.controls-panel .ctl-dd .Select-menu-outer{
-  background: rgba(18,24,34,.98) !important;
-  border: 1px solid rgba(255,255,255,0.14) !important;
-  border-radius: 10px !important;
-  z-index: 30000 !important;
-  box-shadow: 0 14px 40px rgba(0,0,0,.55) !important;
-}
-
-.controls-panel .ctl-dd .Select-option{
-  background: transparent !important;
-  color: rgba(233,238,246,.92) !important;
-  padding: 10px 12px !important;
-}
-
-.controls-panel .ctl-dd .Select-option.is-focused,
-.controls-panel .ctl-dd .Select-option:hover{
-  background: rgba(74,144,226,0.22) !important;
-  color: #fff !important;
-}
-
-.controls-panel .ctl-dd .Select-option.is-selected{
-  background: rgba(244,163,64,0.28) !important;
-  color: #fff !important;
-  font-weight: 700 !important;
-}
-
-/* ----- DatePickerSingle (Run date) dark theme ----- */
-.controls-panel .ctl-date{
-  width: 100%;
-}
-
-.controls-panel .SingleDatePicker,
-.controls-panel .SingleDatePickerInput,
-.controls-panel .SingleDatePickerInput__withBorder{
-  width: 100% !important;
-  background: rgba(20,24,31,0.95) !important;
-  border: 1px solid rgba(255,255,255,0.14) !important;
-  border-radius: 10px !important;
-}
-
-.controls-panel .DateInput{
-  width: 100% !important;
-  background: transparent !important;
-}
-
-.controls-panel .DateInput_input{
-  width: 100% !important;
-  background: transparent !important;     /* remove white input */
-  color: rgba(233,238,246,.92) !important;
-  border: 0 !important;
-  padding: 8px 10px !important;
-  font-size: 13px !important;
-}
-
-.controls-panel .DateInput_input::placeholder{
-  color: rgba(233,238,246,.55) !important;
-}
-
-.controls-panel .SingleDatePicker_picker{
-  z-index: 30000 !important;
-  background: rgba(18,24,34,.98) !important;
-  border: 1px solid rgba(255,255,255,0.14) !important;
-  border-radius: 14px !important;
-  box-shadow: 0 14px 40px rgba(0,0,0,.55) !important;
-}
-
-/* Calendar day colors */
-.controls-panel .CalendarDay__default{
-  background: rgba(18,24,34,.98) !important;
-  color: rgba(233,238,246,.90) !important;
-  border: 1px solid rgba(255,255,255,0.08) !important;
-}
-
-.controls-panel .CalendarDay__selected,
-.controls-panel .CalendarDay__selected:hover{
-  background: rgba(255,209,102,0.35) !important;
-  border: 1px solid rgba(255,209,102,0.60) !important;
-  color: rgba(233,238,246,.95) !important;
-}
-
-/* Make the switch align nicely */
-.controls-panel .ctl-switch{
-  margin-top: 4px;
-}
-
-
-
-/* ===== FIX: dropdown option background not transparent ===== */
-/* Applies to all Dash dropdowns. If you want only Controls panel, prefix with .controls-panel */
-
-.Select-menu-outer{
-  background-color: rgba(18,24,34,0.98) !important;
-}
-
-.Select-menu{
-  background-color: rgba(18,24,34,0.98) !important;
-}
-
-.Select-option{
-  background-color: rgba(18,24,34,0.98) !important;   /* normal row */
-  color: rgba(233,238,246,0.92) !important;
-}
-
-.Select-option.is-focused,
-.Select-option:hover{
-  background-color: rgba(74,144,226,0.25) !important;  /* hover */
-  color: #fff !important;
-}
-
-.Select-option.is-selected{
-  background-color: rgba(244,163,64,0.30) !important;  /* selected */
-  color: #fff !important;
+/* (optional) ensure typed text doesn't look dim */
+.ctl-dd .Select-value-label,
+.ctl-dd .Select-placeholder {
+  color: rgba(233,238,246,0.85) !important;
 }
