@@ -1,203 +1,536 @@
-:root {
-  --bg0: #0b0f14;
-  --bg1: #0e1116;
-  --card: #121822;
-  --card2: #0f141d;
-  --stroke: rgba(255, 255, 255, 0.08);
-  --text: rgba(233, 238, 246, 0.95);
-  --muted: rgba(233, 238, 246, 0.65);
-  --shadow: 0 18px 40px rgba(0, 0, 0, 0.40);
-  --r: 16px;
-  --accent: #4a90e2;
+/* =========================================================
+   GLOBAL THEME TOKENS (your app)
+   ========================================================= */
+:root{
+  --bg0:#0b0f14;
+  --bg1:#0e1116;
+
+  --card:#121822;
+  --card2:#0f141d;
+
+  --stroke:rgba(255,255,255,.10);
+  --stroke2:rgba(255,255,255,.16);
+
+  --text:rgba(233,238,246,.95);
+  --muted:rgba(233,238,246,.65);
+
+  --accent:#4a90e2;
+  --accent2:rgba(74,144,226,.25);
+
+  --shadow:0 18px 40px rgba(0,0,0,.40);
+  --r:16px;
 }
 
-body {
+/* =========================================================
+   DASH DESIGN TOKENS (new DCC refresh dropdown etc.)
+   Set once → styles apply across new components
+   ========================================================= */
+:root{
+  --Dash-Fill-Inverse-Strong: var(--card2);
+  --Dash-Fill-Inverse-Weak:   var(--card);
+  --Dash-Fill-Disabled:       rgba(255,255,255,.10);
+
+  --Dash-Text-Strong:   var(--text);
+  --Dash-Text-Weak:     rgba(233,238,246,.75);
+  --Dash-Text-Disabled: rgba(233,238,246,.55);
+
+  --Dash-Stroke-Strong: var(--stroke2);
+  --Dash-Stroke-Weak:   var(--stroke);
+
+  --Dash-Fill-Interactive-Strong: var(--accent);
+  --Dash-Fill-Interactive-Weak:   var(--accent2);
+
+  --Dash-Shading-Strong: rgba(0,0,0,.65);
+  --Dash-Shading-Weak:   rgba(0,0,0,.35);
+
+  --Dash-Spacing: 4px;
+}
+
+/* =========================================================
+   PAGE BASE (fix white header issue)
+   ========================================================= */
+html, body{
+  height:100%;
+}
+
+body{
   background: radial-gradient(1100px 700px at 18% 0%, #1b2028 0%, var(--bg1) 55%, var(--bg0) 100%) !important;
   color: var(--text) !important;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* -----------------------------
-   Layout & Panels
-   ----------------------------- */
-.page-title { text-align: center; margin: 18px 0 0; font-weight: 800; letter-spacing: 0.2px; }
-.page-subtitle { text-align: center; color: var(--muted); margin: 6px 0 18px; letter-spacing: 0.5px; font-size: 0.9rem; }
-.page-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin: 4px 0 12px; }
-.page-title-wrap { flex: 1 1 auto; }
-.logout-btn { margin-top: 18px; white-space: nowrap; }
+/* Make Bootstrap containers transparent so body gradient shows */
+.container, .container-fluid{
+  background: transparent !important;
+}
 
-.panel {
-  background: linear-gradient(180deg, rgba(18, 24, 34, 0.92), rgba(14, 18, 26, 0.92));
+/* =========================================================
+   HEADERS / TITLES
+   ========================================================= */
+/* ============================
+   PROFESSIONAL HEADER BAR
+   ============================ */
+
+.page-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+
+  padding: 10px 16px;
+  border-radius: 16px;
+}
+
+/* equal side columns so center stays truly centered */
+.brand-left,
+.brand-right{
+  flex: 0 0 220px;              /* reserve space */
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand-left{ justify-content:flex-start; }
+.brand-right{ justify-content:flex-end; }
+
+/* center title */
+.page-title-wrap{
+  flex: 1 1 auto;
+  text-align:center;
+  min-width: 0;
+}
+
+/* control logo size (works even if original image is huge) */
+.brand-logo{
+  height: 72px !important;      /* main size */
+  width: auto !important;
+  max-width: 170px !important;  /* prevents wide logos */
+  object-fit: contain;          /* keep aspect ratio */
+  display:block;
+
+  /* remove harsh white box feel a bit (only helps if PNG has transparency) */
+  border-radius: 10px;
+}
+
+/* Logout: make it always readable + separated */
+.logout-btn{
+  margin-top: 0 !important;
+  height: 34px;
+  padding: 6px 12px;
+  font-weight: 700;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  background: rgba(0,0,0,0.25) !important;
+  color: rgba(233,238,246,0.92) !important;
+}
+
+.logout-btn:hover{
+  border-color: rgba(74,144,226,0.65) !important;
+  box-shadow: 0 0 0 2px rgba(74,144,226,0.18);
+}
+
+/* Mobile: keep usable */
+@media (max-width: 900px){
+  .brand-left, .brand-right{ flex: 0 0 140px; }
+  .brand-logo{ height: 32px !important; max-width: 120px !important; }
+  .logout-btn{ height: 32px; padding: 5px 10px; }
+}
+
+
+/* =========================================================
+   PANELS
+   ========================================================= */
+.panel{
+  background: linear-gradient(180deg, rgba(18,24,34,.92), rgba(14,18,26,.92));
   border: 1px solid var(--stroke);
   border-radius: var(--r);
   box-shadow: var(--shadow);
   padding: 16px;
   height: 100%;
-  overflow: visible; /* CRITICAL: Allows dropdowns to spill out */
+  overflow: visible; /* allow dropdowns */
 }
 
-.section-title { font-size: 16px; font-weight: 800; color: rgba(233, 238, 246, 0.92); margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.5px; }
-
-/* -----------------------------
-   KPI Cards
-   ----------------------------- */
-.summary-stack { display: flex; flex-direction: column; gap: 12px; }
-.kpi-tile { background: linear-gradient(135deg, rgba(34, 46, 74, 0.4), rgba(18, 22, 28, 0.4)); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 14px; }
-.kpi-value { font-size: 22px; font-weight: 900; margin: 0; color: #fff; }
-.kpi-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
-.kpi-sub { font-size: 11px; color: rgba(170, 210, 255, 0.8); margin-top: 4px; }
-
-/* -----------------------------
-   Maps & Charts
-   ----------------------------- */
-.map-panel { padding: 12px; }
-.map-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; margin-bottom: 10px; background: rgba(0, 0, 0, 0.2); border-radius: 10px; }
-.plant-meta-inline { text-align: right; font-size: 12px; color: var(--muted); }
-.meta-line1 { font-weight: bold; color: var(--text); }
-.leaflet-container { border-radius: 14px; background: #0b0f14 !important; }
-
-.chart-card { border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; background: rgba(10, 14, 20, 0.4); padding: 10px; }
-.charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media (max-width: 992px) { .charts-grid { grid-template-columns: 1fr; } }
-.charts_section_hide { display: none; }
-
-/* -----------------------------
-   Tables
-   ----------------------------- */
-.table-scroll { max-height: 420px; overflow-y: auto; border-radius: 14px; border: 1px solid var(--stroke); }
-.table { color: var(--text) !important; margin-bottom: 0 !important; }
-.table thead th { position: sticky; top: 0; background: #151a21 !important; z-index: 2; border-bottom: 2px solid rgba(255, 255, 255, 0.1); color: #fff; }
-.table-centered td, .table-centered th { text-align: center !important; vertical-align: middle !important; }
-.data-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-.ctl-label { font-size: 12px; font-weight: 700; color: rgba(233, 238, 246, 0.8); margin-bottom: 4px; display: block; }
-
-/* =========================================================
-   FIX 1: DROPDOWN MENUS (The White List Issue)
-   ========================================================= */
-
-/* 1. The Container of the list (The box that pops open) */
-.Select-menu-outer, .VirtualizedSelectMenu {
-    background-color: #161b22 !important;  /* Dark background */
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    color: #e9eef6 !important;             /* Text Color */
-    z-index: 9999 !important;              /* Force it on top of the map */
+.section-title{
+  font-size: 14px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: rgba(233,238,246,.92);
+  margin: 0 0 12px;
 }
 
-/* 2. The Options inside the list */
-.Select-option, .VirtualizedSelectOption {
-    background-color: #161b22 !important;
-    color: rgba(233, 238, 246, 0.8) !important;
+.ctl-label{
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(233,238,246,.80);
+  margin-bottom: 6px;
+  display:block;
 }
 
-/* 3. Hover State (When you mouse over an item) */
-.Select-option:hover, 
-.VirtualizedSelectOptionFocused {
-    background-color: rgba(74, 144, 226, 0.25) !important; /* Blue Highlight */
-    color: #ffffff !important;
+/* Put controls on top of map stacking context */
+.controls-panel{
+  position: relative;
+  z-index: 5000;
 }
 
 /* =========================================================
-   FIX 2: DATE PICKERS (Dark Mode Override)
+   KPI CARDS
    ========================================================= */
-.SingleDatePickerInput {
-  background-color: rgba(20, 24, 31, 0.95) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+.summary-stack{ display:flex; flex-direction:column; gap:12px; }
+
+.kpi-tile{
+  background: linear-gradient(135deg, rgba(34,46,74,.40), rgba(18,22,28,.40));
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.kpi-value{
+  font-size: 22px;
+  font-weight: 900;
+  margin: 0;
+  color: #fff;
+}
+
+.kpi-label{
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.kpi-sub{
+  font-size: 11px;
+  color: rgba(170,210,255,.80);
+  margin-top: 4px;
+}
+
+/* =========================================================
+   MAP / META
+   ========================================================= */
+.map-panel{ padding: 12px; }
+
+.map-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  background: rgba(0,0,0,.20);
+  border-radius: 10px;
+}
+
+.plant-meta-inline{
+  text-align:right;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.meta-line1{ font-weight: 800; color: var(--text); }
+.meta-line2{ color: var(--muted); }
+
+.leaflet-container{
+  border-radius: 14px;
+  background: #0b0f14 !important;
+}
+
+/* =========================================================
+   CHARTS
+   ========================================================= */
+.chart-card{
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+  background: rgba(10,14,20,.40);
+  padding: 10px;
+}
+
+.charts-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width:992px){
+  .charts-grid{ grid-template-columns:1fr; }
+}
+.charts_section_hide{ display:none; }
+
+/* =========================================================
+   TABLES
+   ========================================================= */
+.table-scroll{
+  max-height: 420px;
+  overflow-y: auto;
+  border-radius: 14px;
+  border: 1px solid var(--stroke);
+}
+
+.table{ color: var(--text) !important; margin-bottom:0 !important; }
+
+.table thead th{
+  position: sticky;
+  top: 0;
+  background: #151a21 !important;
+  z-index: 2;
+  border-bottom: 2px solid rgba(255,255,255,.10);
+  color: #fff;
+}
+
+.table-centered td,
+.table-centered th{
+  text-align:center !important;
+  vertical-align:middle !important;
+}
+
+/* =========================================================
+   SLIDER MARKS
+   ========================================================= */
+.rc-slider-mark-text{
+  color: rgba(233,238,246,.65) !important;
+  font-size: 12px !important;
+}
+.rc-slider-mark-text-active{
+  color:#fff !important;
+  font-weight: 800 !important;
+}
+.rc-slider-rail{ background-color: rgba(255,255,255,.15) !important; }
+.rc-slider-track{ background-color: var(--accent) !important; }
+
+/* =========================================================
+   DATE PICKERS (dark)
+   ========================================================= */
+.SingleDatePickerInput,
+.dl-range-compact .DateRangePickerInput{
+  background-color: rgba(20,24,31,.95) !important;
+  border: 1px solid rgba(255,255,255,.15) !important;
   border-radius: 8px !important;
-  display: block !important;
 }
 
-.DateInput { width: 100% !important; background-color: transparent !important; }
-.DateInput_input {
-  background-color: transparent !important;
+.DateInput{ background: transparent !important; }
+.DateInput_input{
+  background: transparent !important;
   border-bottom: none !important;
-  color: #e9eef6 !important;
-  font-size: 14px !important;
-  font-weight: 500 !important;
-  padding: 8px 12px !important;
+  color: var(--text) !important;
 }
 
-.DateInput_input::placeholder { color: rgba(233, 238, 246, 0.5) !important; }
-.DateInput_input__focused { border-bottom: none !important; background-color: rgba(255, 255, 255, 0.05) !important; }
+.SingleDatePicker_picker,
+.DateRangePicker_picker{
+  background-color:#161b22 !important;
+  border: 1px solid rgba(255,255,255,.15) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,.6) !important;
+  z-index: 10100 !important;
+}
 
-/* Calendar Popup */
-.SingleDatePicker_picker {
+/* =========================================================
+   DROPDOWNS — support BOTH:
+   A) new Dash dropdown (dash-dropdown-*)
+   B) legacy react-select (.Select / .Select__)
+   ========================================================= */
+
+/* ---------- A) NEW Dash dropdown classes ---------- */
+.dash-dropdown,
+.dash-dropdown-content{
+  background: var(--Dash-Fill-Inverse-Strong) !important;
+  border: 1px solid var(--Dash-Stroke-Strong) !important;
+  color: var(--Dash-Text-Strong) !important;
+  border-radius: 10px !important;
+}
+
+.dash-dropdown-trigger{ min-height: 36px; }
+.dash-dropdown-placeholder{ color: var(--Dash-Text-Disabled) !important; }
+
+.dash-dropdown-content{
+  z-index: 20000 !important;
+}
+
+.dash-dropdown-option:hover{
+  background: var(--Dash-Fill-Interactive-Weak) !important;
+}
+
+.dash-dropdown-search-container{
+  background: var(--Dash-Fill-Inverse-Strong) !important;
+  border: 1px solid var(--Dash-Stroke-Strong) !important;
+}
+
+.dash-dropdown-search{
+  color: var(--Dash-Text-Strong) !important;
+}
+
+/* ---------- B) LEGACY react-select (dcc.Dropdown older DOM) ---------- */
+.ctl-dd{ position:relative; z-index: 6000; }
+
+/* closed control */
+.ctl-dd .Select-control,
+.ctl-dd .Select__control{
+  background-color: var(--card2) !important;
+  border: 1px solid rgba(255,255,255,.18) !important;
+  box-shadow: none !important;
+  min-height: 36px !important;
+}
+
+/* placeholder + value */
+.ctl-dd .Select-placeholder,
+.ctl-dd .Select__placeholder{
+  color: rgba(233,238,246,.55) !important;
+}
+.ctl-dd .Select-value-label,
+.ctl-dd .Select__single-value{
+  color: rgba(233,238,246,.90) !important;
+}
+
+/* search input */
+.ctl-dd .Select-input > input,
+.ctl-dd .Select__input-container input{
+  color: var(--text) !important;
+  caret-color: var(--text) !important;
+}
+
+/* menu (some versions render in a portal, so keep these GLOBAL too) */
+.Select__menu-portal{
+  position: relative !important; /* z-index works only on positioned elems */ /* community fix */
+  z-index: 20000 !important;
+}
+.Select-menu-outer,
+.Select__menu,
+.VirtualizedSelectMenu{
   background-color: #161b22 !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
-  z-index: 1010 !important;
+  border: 1px solid rgba(255,255,255,.18) !important;
+  z-index: 20000 !important;
 }
 
-.DayPicker, .DayPicker__withBorder, .CalendarMonth, .CalendarMonthGrid { background-color: #161b22 !important; }
-.CalendarMonth_caption { color: #fff !important; }
-.DayPicker_weekHeader_ul li { color: rgba(233, 238, 246, 0.6) !important; }
-.CalendarDay__default { background-color: #161b22 !important; color: #e9eef6 !important; border: 1px solid #222 !important; }
-.CalendarDay__default:hover { background-color: rgba(255, 255, 255, 0.1) !important; }
-.CalendarDay__selected { background-color: var(--accent) !important; border-color: var(--accent) !important; }
-
-
-/* =========================================================
-   FIX 3: SLIDERS (Invisible Numbers Fix)
-   ========================================================= */
-.rc-slider-mark-text {
-    color: rgba(233, 238, 246, 0.65) !important;
-    font-size: 12px !important;
+/* options */
+.Select-option,
+.Select__option,
+.VirtualizedSelectOption{
+  background-color: #161b22 !important;
+  color: rgba(233,238,246,.88) !important;
 }
-.rc-slider-mark-text-active {
-    color: #ffffff !important;
-    font-weight: bold !important;
+.Select-option.is-focused,
+.Select__option--is-focused,
+.VirtualizedSelectOptionFocused{
+  background-color: rgba(74,144,226,.25) !important;
+  color: #fff !important;
 }
-.rc-slider-rail { background-color: rgba(255, 255, 255, 0.15) !important; }
-.rc-slider-track { background-color: var(--accent) !important; }
-
-
-/* =========================================================
-   Compact Download Range (Bottom Panel)
-   ========================================================= */
-.download-bar { display: flex; align-items: center; gap: 8px; }
-.dl-range-compact .DateRangePickerInput {
-  background-color: rgba(20, 24, 31, 0.95) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  border-radius: 6px !important;
-  padding: 0 5px !important;
-  display: flex !important;
-  align-items: center !important;
+.Select-option.is-selected,
+.Select__option--is-selected{
+  background-color: rgba(74,144,226,.40) !important;
+  color: #fff !important;
 }
-.dl-range-compact .DateInput { width: 90px !important; }
-.dl-range-compact .DateInput_input { font-size: 12px !important; padding: 4px !important; text-align: center !important; }
-.dl-range-compact .DateRangePickerInput_arrow { padding: 0 5px !important; }
-.DateRangePicker_picker { z-index: 9999 !important; }
-
 /* ============================
-   dcc.Dropdown search input bg
+   DATA header: clean right toolbar (professional)
    ============================ */
 
-/* the main closed dropdown control */
-.ctl-dd .Select-control {
-  background-color: #0f141d !important;
-  border: 1px solid rgba(255,255,255,0.15) !important;
-  color: rgba(233,238,246,0.95) !important;
+.data-header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  flex-wrap:nowrap !important;
 }
 
-/* the input wrapper (when dropdown is open & searchable) */
-.ctl-dd .Select-input {
-  background-color: #0f141d !important;
-  color: rgba(233,238,246,0.95) !important;
+.data-left{
+  flex:1 1 auto;
+  min-width:0;
 }
 
-/* the actual search <input> element */
-.ctl-dd .Select-input > input {
-  background-color: #0f141d !important;
-  color: rgba(233,238,246,0.95) !important;
-  caret-color: rgba(233,238,246,0.95) !important;
+/* Right side toolbar */
+.download-bar{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:12px;
+  flex:0 0 auto;
 }
 
-/* placeholder text in the search input */
-.ctl-dd .Select-input > input::placeholder {
-  color: rgba(233,238,246,0.55) !important;
+/* ============================
+   DatePickerRange compact + readable (no wrapping)
+   Dash DatePickerRange uses react-dates classes
+   ============================ */
+
+.dl-range-compact{
+  display:inline-flex !important;
+  align-items:center !important;
 }
 
-/* (optional) ensure typed text doesn't look dim */
-.ctl-dd .Select-value-label,
-.ctl-dd .Select-placeholder {
-  color: rgba(233,238,246,0.85) !important;
+/* main input shell */
+.dl-range-compact .DateRangePickerInput,
+.dl-range-compact .DateRangePickerInput__withBorder{
+  display:inline-flex !important;
+  align-items:center !important;
+  flex-wrap:nowrap !important;
+  width: 320px !important;        /* key: enough room so it never stacks */
+  min-width: 320px !important;
+  max-width: 320px !important;
+
+  height: 38px !important;
+  padding: 0 10px !important;
+
+  border-radius: 10px !important;
+  background: rgba(20,24,31,.95) !important;
+  border: 1px solid rgba(255,255,255,.16) !important;
+}
+
+/* each date box */
+.dl-range-compact .DateInput{
+  width: 128px !important;        /* From + To side by side */
+  background: transparent !important;
+}
+
+/* actual input text */
+.dl-range-compact .DateInput_input{
+  height: 36px !important;
+  line-height: 36px !important;
+  padding: 0 8px !important;
+  font-size: 12.5px !important;
+  text-align: center !important;
+
+  background: transparent !important;
+  color: rgba(233,238,246,.92) !important;
+  border: 0 !important;
+}
+
+/* arrow between From and To */
+.dl-range-compact .DateRangePickerInput_arrow{
+  padding: 0 8px !important;
+  color: rgba(233,238,246,.55) !important;
+}
+
+/* clear (x) button: keep inline and not stacked */
+.dl-range-compact .DateRangePickerInput_clearDates{
+  position: static !important;
+  margin: 0 4px 0 6px !important;
+  padding: 0 !important;
+  width: 18px !important;
+  height: 18px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  background: transparent !important;
+}
+
+.dl-range-compact .DateRangePickerInput_clearDates_svg{
+  width: 14px !important;
+  height: 14px !important;
+  fill: rgba(233,238,246,.70) !important;
+}
+
+/* On focus: clean highlight */
+.dl-range-compact .DateRangePickerInput__focused{
+  border-color: rgba(74,144,226,.55) !important;
+  box-shadow: 0 0 0 2px rgba(74,144,226,.15) !important;
+}
+
+/* calendar popup above everything */
+.DateRangePicker_picker{
+  z-index: 20000 !important;
+}
+.brand-logo{
+  height: 100px;        /* smaller */
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,.30));
+}
+
+/* optional: even smaller on mobile */
+@media (max-width: 900px){
+  .brand-logo{ height: 22px; }
 }

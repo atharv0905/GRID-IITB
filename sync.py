@@ -6,15 +6,14 @@ from datetime import datetime
 from psycopg2.extras import RealDictCursor
 
 DB_CONFIG = dict(
-    host="localhost",
+    host="10.135.5.11",
     database="redb",
     user="reuser",
     password="repass",
     port="5432"
 )
 
-API_URL = "http://72.62.231.249:8001/data"
-API_KEY = "external_company_write_key_123"
+API_URL = "http://10.135.5.11:8001/data"
 
 TABLE_CONFIG = {
     "regions": "created_at",

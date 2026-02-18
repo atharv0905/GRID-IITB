@@ -13,7 +13,7 @@ import uvicorn
 
 DATABASE_URL = os.environ.get(
     "DATABASE_URL",
-    "postgresql+psycopg2://reuser:repass@localhost:5432/redb"
+    "postgresql+psycopg2://reuser:repass@10.135.5.11:5432/redb"
 )
 
 engine = create_engine(DATABASE_URL, pool_pre_ping=True)
@@ -314,4 +314,4 @@ def series(plant_id: str, run_id: str):
     return {"run_id": run_id, "items": list(rows)}
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8001)
