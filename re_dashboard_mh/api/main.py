@@ -2,6 +2,8 @@
 from __future__ import annotations
 from pydantic import BaseModel
 import psycopg2
+from psycopg2.extras import execute_values
+
 import os
 from typing import Optional, List, Dict, Any
 
@@ -59,17 +61,160 @@ def login(request: LoginRequest):
 
 class DataWrapper(BaseModel):
     data: Dict[str, Any]
-    
+
+def insert_regions(cur, rows):
+    if not rows:
+        return 0
+
+    query = """
+    INSERT INTO regions (region_id, region_code, region_name, created_at)
+    VALUES %s
+    ON CONFLICT (region_code) DO NOTHING
+    """
+
+    values = [
+        (r["region_id"], r["region_code"], r["region_name"], r["created_at"])
+        for r in rows
+    ]
+
+    execute_values(cur, query, values)
+    return cur.rowcount
+
+def insert_users(cur, rows):
+    if not rows:
+        return 0
+
+    query = """
+    INSERT INTO users (user_id, uname, password)
+    VALUES %s
+    ON CONFLICT (uname) DO NOTHING
+    """
+
+    values = [(u["user_id"], u["uname"], u["password"]) for u in rows]
+    execute_values(cur, query, values)
+    return cur.rowcount
+
+def insert_plants(cur, rows):
+    if not rows:
+        return 0
+
+    query = """
+    INSERT INTO plants
+    (plant_id, plant_name, region_id, plant_type, lat, lon, created_at)
+    VALUES %s
+    ON CONFLICT (region_id, plant_name) DO NOTHING
+    """
+
+    values = [
+        (
+            p["plant_id"], p["plant_name"], p["region_id"],
+            p["plant_type"], p["lat"], p["lon"], p["created_at"]
+        )
+        for p in rows
+    ]
+
+    execute_values(cur, query, values)
+    return cur.rowcount
+
+def insert_runs(cur, rows):
+    if not rows:
+        return 0
+
+    query = """
+    INSERT INTO forecast_runs
+    (run_id, model_name, region_id, revision, run_t0_utc, run_t0_ist, run_t0_raw, created_at)
+    VALUES %s
+    ON CONFLICT (model_name, region_id, revision, run_t0_utc) DO NOTHING
+    """
+
+    values = [
+        (
+            r["run_id"], r["model_name"], r["region_id"], r["revision"],
+            r["run_t0_utc"], r["run_t0_ist"], r["run_t0_raw"], r["created_at"]
+        )
+        for r in rows
+    ]
+
+    execute_values(cur, query, values)
+    return cur.rowcount
+
+def insert_predictions(cur, rows):
+    if not rows:
+        return 0
+
+    query = """
+    INSERT INTO mi_predictions
+    (run_id, plant_id, valid_time_utc, valid_time_ist, valid_time_raw,
+     ghi_pred_wm2, ghi_actual_wm2, power_pred_mw, power_actual_mw,
+     solar_power_pred_mw, solar_power_actual_mw,
+     wind_power_pred_mw, wind_power_actual_mw)
+    VALUES %s
+    ON CONFLICT (run_id, plant_id, valid_time_utc) DO NOTHING
+    """
+
+    values = [
+        (
+            r["run_id"], r["plant_id"], r["valid_time_utc"], r["valid_time_ist"], r["valid_time_raw"],
+            r["ghi_pred_wm2"], r["ghi_actual_wm2"], r["power_pred_mw"], r["power_actual_mw"],
+            r["solar_power_pred_mw"], r["solar_power_actual_mw"],
+            r["wind_power_pred_mw"], r["wind_power_actual_mw"]
+        )
+        for r in rows
+    ]
+
+    execute_values(cur, query, values, page_size=1000)
+    return cur.rowcount
+
+def insert_files(cur, rows):
+    if not rows:
+        return 0
+
+    query = """
+    INSERT INTO ingested_files (path, mtime, size, sha1, model_name, ingested_at)
+    VALUES %s
+    ON CONFLICT (path) DO NOTHING
+    """
+
+    values = [
+        (f["path"], f["mtime"], f["size"], f["sha1"], f["model_name"], f["ingested_at"])
+        for f in rows
+    ]
+
+    execute_values(cur, query, values)
+    return cur.rowcount
+
 @app.post("/data")
 def receive_data(wrapper: DataWrapper):
-    payload = wrapper.data   # <-- unwrap here
+    data = wrapper.data
+    counts = {}
 
-    print("Received data payload:", payload)
+    conn = engine.raw_connection()   # get pooled connection
+
+    try:
+        cur = conn.cursor()
+
+        counts["regions"] = insert_regions(cur, data.get("regions", []))
+        counts["users"] = insert_users(cur, data.get("users", []))
+        counts["plants"] = insert_plants(cur, data.get("plants", []))
+        counts["runs"] = insert_runs(cur, data.get("forecast_runs", []))
+        counts["predictions"] = insert_predictions(cur, data.get("mi_predictions", []))
+        counts["files"] = insert_files(cur, data.get("ingested_files", []))
+
+        conn.commit()   # commit transaction
+        cur.close()
+
+    except Exception as e:
+        conn.rollback()
+        raise e
+
+    finally:
+        conn.close()   # VERY IMPORTANT (returns to pool)
+
+    print("Inserted rows:", counts)
 
     return {
         "status": "success",
-        "message": "Data received",
-        "records_received": len(payload) if isinstance(payload, list) else 1
+        "inserted_rows": counts
     }
 
 @app.get("/regions")

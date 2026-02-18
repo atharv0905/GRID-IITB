@@ -22,6 +22,7 @@ Requested behavior
 - Print ALL detected CSVs per scan
 - Show if a file was unchanged vs changed (but still ingest)
 - Print per file: runs_with_points, total points, and per-plant row counts
+- NEW: Print which IST dates were present in each file and each group, and show gaps.
 """
 
 import os
@@ -29,6 +30,7 @@ import time
 import hashlib
 from pathlib import Path
 from typing import Optional, List, Dict, Tuple
+from datetime import date
 
 import pandas as pd
 from sqlalchemy import create_engine, text
@@ -71,7 +73,7 @@ def parse_timestamps_no_warning(series: pd.Series) -> Tuple[pd.Series, pd.Series
 
     Returns:
       timestamp_raw: original trimmed strings
-      timestamp_dt : parsed datetimes
+      timestamp_dt : parsed datetimes (naive)
     """
     ts = series.astype(str).fillna("").str.strip()
 
@@ -88,6 +90,68 @@ def parse_timestamps_no_warning(series: pd.Series) -> Tuple[pd.Series, pd.Series
         dt.loc[mask] = dt_fb
 
     return ts, dt
+
+
+def _series_to_ist(dt_series: pd.Series) -> pd.Series:
+    """
+    Convert a datetime Series to tz-aware IST.
+    If naive -> localize IST. If tz-aware -> convert IST.
+    """
+    if dt_series is None or dt_series.empty:
+        return dt_series
+
+    try:
+        # dt accessor exists for datetime-like Series
+        tzinfo = getattr(dt_series.dt, "tz", None)
+    except Exception:
+        tzinfo = None
+
+    try:
+        if tzinfo is None:
+            # naive -> interpret as IST
+            return dt_series.dt.tz_localize("Asia/Kolkata")
+        else:
+            # tz-aware -> convert to IST
+            return dt_series.dt.tz_convert("Asia/Kolkata")
+    except Exception:
+        # last-resort: return original (better than crashing debug)
+        return dt_series
+
+
+def _dates_from_dt_ist(dt_ist: pd.Series) -> List[date]:
+    if dt_ist is None or len(dt_ist) == 0:
+        return []
+    try:
+        vals = dt_ist.dropna().dt.date
+        uniq = sorted(set(vals.tolist()))
+        return uniq
+    except Exception:
+        return []
+
+
+def _fmt_dates(dates: List[date], max_items: int = 25) -> str:
+    if not dates:
+        return "[]"
+    if len(dates) <= max_items:
+        return "[" + ", ".join(d.isoformat() for d in dates) + "]"
+    return "[" + ", ".join(d.isoformat() for d in dates[:max_items]) + f", ... (+{len(dates)-max_items})]"
+
+
+def _missing_dates(dates: List[date], max_span_days: int = 90) -> List[date]:
+    """
+    Compute missing dates between min(dates) and max(dates).
+    For safety, only if span <= max_span_days.
+    """
+    if not dates:
+        return []
+    d0, d1 = dates[0], dates[-1]
+    span = (d1 - d0).days
+    if span <= 0 or span > max_span_days:
+        return []
+    full = set(pd.date_range(d0, d1, freq="D").date.tolist())
+    have = set(dates)
+    miss = sorted(full - have)
+    return miss
 
 
 # -------------------------
@@ -188,6 +252,7 @@ def ensure_run(conn, model_name: str, region_id: str, revision: str,
 
 
 def overwrite_predictions(conn, run_id: str, plant_id: str, df_group: pd.DataFrame, plant_type: str) -> int:
+    # OVERWRITE MODE: drop everything for this run+plant, then insert snapshot from CSV
     conn.execute(
         text("DELETE FROM mi_predictions WHERE run_id=:r AND plant_id=:p"),
         {"r": run_id, "p": plant_id},
@@ -201,6 +266,7 @@ def overwrite_predictions(conn, run_id: str, plant_id: str, df_group: pd.DataFra
         if pd.isna(vt_ist):
             continue
 
+        # interpret naive timestamps as IST
         if getattr(vt_ist, "tzinfo", None) is None:
             vt_ist = vt_ist.replace(tzinfo=IST)
         else:
@@ -293,6 +359,27 @@ def ingest_csv(path: Path, model_name: str) -> bool:
     df["timestamp_raw"] = ts_raw
     df["timestamp_dt"] = ts_dt
 
+    # ---- NEW: file-level timestamp coverage debug ----
+    total_rows = int(len(df))
+    parsed_ok = int(df["timestamp_dt"].notna().sum())
+    parsed_bad = total_rows - parsed_ok
+
+    dt_ist_all = _series_to_ist(df["timestamp_dt"])
+    file_dates = _dates_from_dt_ist(dt_ist_all)
+    file_missing = _missing_dates(file_dates, max_span_days=120)
+
+    print(f"[FILE] {model_name} path={path}")
+    print(f"       rows={total_rows} parsed_ok={parsed_ok} parsed_failed={parsed_bad}")
+    if file_dates:
+        print(f"       IST date coverage: {file_dates[0].isoformat()} -> {file_dates[-1].isoformat()}  (n_dates={len(file_dates)})")
+        if file_missing:
+            # This is the key line for your Feb 1–8 gap problem
+            print(f"       MISSING dates inside range: {_fmt_dates(file_missing, max_items=40)}")
+        else:
+            print(f"       Missing dates inside range: []")
+    else:
+        print(f"       IST date coverage: NONE (timestamps not parsing?)")
+
     grouped = df.groupby(["source_sheet", "site_name", "revision"], dropna=False)
 
     file_total_points = 0
@@ -308,12 +395,25 @@ def ingest_csv(path: Path, model_name: str) -> bool:
             prev_sha1 = prev[4]
             status = "UNCHANGED_REINGEST" if (prev_sha1 == h) else "CHANGED_REINGEST"
 
+        # ---- NEW: per-file union of group run dates (t0 dates) ----
+        t0_dates_union: set = set()
+
         for (source_sheet, site_name, revision), g in grouped:
             source_sheet = str(source_sheet or "").strip()
             site_name = str(site_name or "").strip()
             revision = str(revision or "").strip()
             if not source_sheet or not site_name or not revision:
                 continue
+
+            # group stats
+            g_rows = int(len(g))
+            g_ok = int(g["timestamp_dt"].notna().sum())
+            g_bad = g_rows - g_ok
+
+            # group date coverage (IST)
+            g_dt_ist = _series_to_ist(g["timestamp_dt"])
+            g_dates = _dates_from_dt_ist(g_dt_ist)
+            g_missing = _missing_dates(g_dates, max_span_days=120)
 
             lat = lon = None
             if "latitude" in g.columns:
@@ -330,19 +430,34 @@ def ingest_csv(path: Path, model_name: str) -> bool:
             t0_dt = g["timestamp_dt"].min()
 
             if pd.isna(t0_dt):
+                print(f"  [GROUP] {source_sheet} | {site_name} | {revision} rows={g_rows} ok={g_ok} bad={g_bad} -> t0=NaT (SKIP RUN) dates={_fmt_dates(g_dates)}")
+                if g_missing:
+                    print(f"          missing_dates={_fmt_dates(g_missing, max_items=40)}")
                 per_plant_counts.append((source_sheet, site_name, revision, 0))
                 continue
 
+            # interpret t0 as IST
             if getattr(t0_dt, "tzinfo", None) is None:
                 t0_ist = t0_dt.replace(tzinfo=IST)
             else:
                 t0_ist = t0_dt.astimezone(IST)
 
             t0_utc = t0_ist.astimezone(UTC)
-            t0_raw = g.loc[g["timestamp_dt"].idxmin(), "timestamp_raw"]
+
+            try:
+                t0_raw = g.loc[g["timestamp_dt"].idxmin(), "timestamp_raw"]
+            except Exception:
+                t0_raw = ""
+
+            # keep union of run dates (t0 date in IST)
+            try:
+                t0_dates_union.add(t0_ist.date())
+            except Exception:
+                pass
 
             run_id = ensure_run(conn, model_name, region_id, revision, t0_raw, t0_ist, t0_utc)
             if not run_id:
+                print(f"  [GROUP] {source_sheet} | {site_name} | {revision} -> ensure_run FAILED")
                 per_plant_counts.append((source_sheet, site_name, revision, 0))
                 continue
 
@@ -353,13 +468,41 @@ def ingest_csv(path: Path, model_name: str) -> bool:
             if n_inserted > 0:
                 runs_with_points += 1
 
+            # ---- NEW: group-level debug print with run date + date coverage ----
+            t0_show = ""
+            try:
+                t0_show = t0_ist.strftime("%Y-%m-%d %H:%M:%S %Z")
+            except Exception:
+                t0_show = str(t0_ist)
+
+            print(
+                f"  [GROUP] {source_sheet} | {site_name} | {revision} "
+                f"rows={g_rows} ok={g_ok} bad={g_bad} "
+                f"t0_raw='{t0_raw}' t0_ist={t0_show} run_id={run_id} inserted={n_inserted}"
+            )
+            if g_dates:
+                print(f"          dates: {g_dates[0].isoformat()} -> {g_dates[-1].isoformat()} (n={len(g_dates)})")
+                if g_missing:
+                    print(f"          missing_dates={_fmt_dates(g_missing, max_items=40)}")
+            else:
+                print(f"          dates: NONE (group timestamps not parsing?)")
+
             per_plant_counts.append((source_sheet, site_name, revision, n_inserted))
 
         mark_ingested(conn, path, model_name, mtime, size, h)
 
+    # ---- NEW: show union of run dates created/updated from this file ----
+    if t0_dates_union:
+        t0_dates_sorted = sorted(t0_dates_union)
+        miss_t0 = _missing_dates(t0_dates_sorted, max_span_days=120)
+        print(f"[RUN DATES] {model_name} file produced/updated run_t0 IST dates: {t0_dates_sorted[0]} -> {t0_dates_sorted[-1]} (n={len(t0_dates_sorted)})")
+        if miss_t0:
+            print(f"            missing run dates inside range: {_fmt_dates(miss_t0, max_items=40)}")
+    else:
+        print(f"[RUN DATES] {model_name} file produced/updated run_t0 IST dates: NONE")
+
     print(f"[INGEST] {model_name} {status} file={path} runs_with_points={runs_with_points} points={file_total_points}")
 
-    # Show all plant groups in this file (not just top 25) because you requested full visibility
     for (src, site, rev, n) in sorted(per_plant_counts, key=lambda x: (x[0], x[1], x[2])):
         print(f"  - {src} | {site} | {rev} -> rows={n}")
 
@@ -390,7 +533,6 @@ def scan_root(root: str, model_name: str):
     files = list_csv_files(rp)
     print(f"[SCAN] {model_name} root={rp} files={len(files)}")
 
-    # Print ALL detected CSV files (as requested)
     for i, p in enumerate(files, start=1):
         print(f"  [{i:04d}] {p}")
 
@@ -407,6 +549,7 @@ def scan_root(root: str, model_name: str):
 
 def main():
     print("Folder watcher ingest started.")
+    print(f"DATABASE_URL={DATABASE_URL}")
     print(f"NOWCAST_ROOT={NOWCAST_ROOT}")
     print(f"MEDIUM_ROOT={MEDIUM_ROOT}")
     print(f"DAYFIRST={DAYFIRST}")
